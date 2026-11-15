@@ -85,7 +85,7 @@
 
 @media (max-width: 639px) {
   :root {
-    --bar: calc(72px + env(safe-area-inset-bottom, 0px));
+    --bar: calc(64px + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -1495,14 +1495,13 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   font-size: 16px;
 }
 
+/* ícone numa caixa de 40 px, na mesma coluna das iniciais; sem fundo: é um link, não um botão */
 .depo__review .brand-icon {
   padding: 8px;
-  border-radius: 50%;
-  background: var(--on-dark);
-  color: var(--oxblood);
   box-sizing: content-box;
   width: 24px;
   height: 24px;
+  color: var(--on-dark);
 }
 
 .depo__review .icon {
@@ -2349,7 +2348,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom, 0px));
+    padding: 8px var(--gut) calc(8px + env(safe-area-inset-bottom, 0px));
     background: rgb(253 252 252 / 0.98);
     box-shadow: 0 -1px 0 var(--line);
     transform: translateY(105%);
@@ -2358,6 +2357,10 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 
   .actionbar.is-shown {
     transform: none;
+  }
+
+  .actionbar .btn {
+    min-height: 48px;
   }
 }
 
