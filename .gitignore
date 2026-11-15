@@ -1,0 +1,27 @@
+# build
+dist/
+.astro/
+
+# dependências
+node_modules/
+
+# site antigo e fotos originais em alta (ficam só na máquina local)
+_legado/
+
+# saídas temporárias
+tools/logo/out/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/questions/
+.impeccable/config.local.json
+.playwright-mcp/
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+
+# estado local das skills de design
+.taste-skill/

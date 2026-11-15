@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T00:10:00-03:00",
+  "title": "Design System: Dra. Vanessa Damin",
+  "extensions": {
+    "colorMeta": {
+      "oxblood": {
+        "role": "primary",
+        "displayName": "Bordô Laudo",
+        "canonical": "#6B1222",
+        "tonalRamp": ["#2A060D", "#3E0A14", "#57101C", "#6B1222", "#7D172A", "#A44A5A", "#D9AEB3", "#F4E4E6"]
+      },
+      "wine": {
+        "role": "primary",
+        "displayName": "Vinho Profundo",
+        "canonical": "#3E0A14",
+        "tonalRamp": ["#1C0409", "#2A060D", "#3E0A14", "#4D0D19", "#6B1222", "#9C5964", "#D7B5BA", "#F3E6E8"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel Térmico",
+        "canonical": "#FDFCFC",
+        "tonalRamp": ["#2B2526", "#5B4E50", "#8C7F81", "#B8ADAF", "#DCD4D5", "#EEE8E9", "#F6F1F1", "#FDFCFC"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta do Traçado",
+        "canonical": "#1F0E12",
+        "tonalRamp": ["#140709", "#1F0E12", "#33232A", "#4C3A3F", "#5B484D", "#8A7A7E", "#C4B9BB", "#EDE7E8"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Só o nome da médica na abertura, em caixa-alta." },
+      "headline": { "displayName": "Headline", "purpose": "Um título por seção, com o pulso de calibração na margem." },
+      "title": { "displayName": "Title", "purpose": "Itens de lista, capítulos e a frase do fechamento." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido, 17 px, entrelinha 1.6." },
+      "label": { "displayName": "Label", "purpose": "Rótulos de campo de laudo, períodos e notas." }
+    },
+    "shadows": [
+      { "name": "paper-panel", "value": "0 24px 48px -32px rgb(31 14 18 / 0.35)", "purpose": "Painéis de leitura sobre a grade (resposta do mito, formulário, capítulo)." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Entradas, sublinhados e aberturas de listas." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "O traçado da abertura que se desenha (1,5 s)." },
+      { "name": "press", "value": "scale(0.97) em 90 ms", "purpose": "Retorno ao toque nos botões." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "0–639px" },
+      { "name": "tablet", "value": "640px" },
+      { "name": "split", "value": "768px" },
+      { "name": "desktop", "value": "1024px" },
+      { "name": "nav", "value": "1200px" },
+      { "name": "wide", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "A única ação dominante: Agendar consulta, abre o WhatsApp.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg>Agendar consulta</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 24px; border-radius: 2px; background: #6B1222; color: #FBF3F2; font: 500 16px 'Fira Sans', system-ui, sans-serif; text-decoration: none; transition: background-color 180ms cubic-bezier(.22,1,.36,1), transform 160ms cubic-bezier(.22,1,.36,1); } .ds-btn-primary:hover { background: #7D172A; } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #B0223B; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Ações secundárias sobre o papel.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Ver áreas de atuação</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border: 1px solid rgb(31 14 18 / 0.32); border-radius: 2px; color: #1F0E12; font: 500 16px 'Fira Sans', system-ui, sans-serif; text-decoration: none; transition: background-color 180ms, color 180ms; } .ds-btn-ghost:hover { background: #1F0E12; color: #FDFCFC; } .ds-btn-ghost:focus-visible { outline: 2px solid #B0223B; outline-offset: 3px; }"
+    },
+    {
+      "name": "Laudo Fields",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Registro profissional impresso como campos de laudo.",
+      "html": "<dl class=\"ds-fields\"><div><dt>CRM/SC</dt><dd>20674</dd></div><div><dt>RQE</dt><dd>15969</dd></div><div><dt>RQE</dt><dd>17474</dd></div></dl>",
+      "css": ".ds-fields { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 1px solid rgb(31 14 18 / 0.32); } .ds-fields div { padding: 12px 12px 12px 0; } .ds-fields div + div { padding-left: 12px; border-left: 1px solid rgb(31 14 18 / 0.14); } .ds-fields dt { font: 500 13px 'Fira Sans Extra Condensed', sans-serif; letter-spacing: .04em; color: #5B484D; } .ds-fields dd { margin: 0; font: 500 17px 'Fira Sans', sans-serif; font-variant-numeric: tabular-nums; color: #1F0E12; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Campo do formulário que monta a mensagem do WhatsApp.",
+      "html": "<label class=\"ds-field\"><span>Nome completo</span><input type=\"text\"></label>",
+      "css": ".ds-field { display: grid; gap: 6px; font: 500 15px 'Fira Sans Extra Condensed', sans-serif; color: #4C3A3F; } .ds-field input { min-height: 52px; padding: 12px 14px; border: 1px solid rgb(31 14 18 / 0.32); border-radius: 2px; background: #fff; font: 400 17px 'Fira Sans', sans-serif; color: #1F0E12; } .ds-field input:focus-visible { outline: none; border-color: #6B1222; box-shadow: 0 0 0 3px rgb(107 18 34 / .18); }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Título de seção com o pulso de calibração pendurado na margem.",
+      "html": "<h2 class=\"ds-h2\">Perguntas frequentes sobre a consulta</h2>",
+      "css": ".ds-h2 { position: relative; margin: 0 0 0 32px; font: 400 40px/1.04 'Fira Sans Extra Condensed', sans-serif; color: #1F0E12; } .ds-h2::before { content: ''; position: absolute; left: -28px; top: .24em; width: 18px; height: 22px; border: 2.4px solid #6B1222; border-bottom: 0; box-sizing: border-box; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Traçado",
+    "overview": "O site inteiro é um laudo de eletrocardiograma lido com calma. O papel térmico branco com grade milimetrada é o chão da página; o traçado com o pulso de calibração é o fio condutor; os dados são impressos como campos de laudo. O bordô escuro ocupa regiões inteiras, nunca respingos. A densidade é de documento médico: filetes de 1 px, listas em vez de cartões, cantos retos, quase nenhuma sombra. O celular manda.",
+    "keyCharacteristics": [
+      "Grade milimetrada sutil (4 px = 1 mm, linha forte a cada 20 px) como fundo das seções claras.",
+      "Traçado de ECG em SVG com pulso de calibração, desenhado uma vez.",
+      "Bordô (#6B1222) e vinho (#3E0A14) em faixas de largura total.",
+      "Campos de laudo: rótulo condensado, valor tabular, filete por cima.",
+      "Uma única ação dominante: Agendar consulta, sempre o mesmo bloco bordô."
+    ],
+    "rules": [
+      { "name": "The One Hue Rule", "body": "Nenhuma cor própria fora da família bordô. Marcas de terceiros aparecem em monocromático.", "section": "colors" },
+      { "name": "The Whole Band Rule", "body": "O bordô entra em regiões inteiras ou em pequenos sinais funcionais; nunca como gradiente, brilho ou fundo de cartão.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Todo número que é registro ou data usa algarismos tabulares.", "section": "typography" },
+      { "name": "The No Heavy Display Rule", "body": "Títulos em peso 400; tamanho e compressão fazem a hierarquia.", "section": "typography" },
+      { "name": "The Printed Paper Rule", "body": "Nada de vidro, desfoque ou brilho; o mundo é papel impresso.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar Agendar consulta com o mesmo bloco bordô em toda a página.",
+      "Do manter a grade milimetrada sutil como fundo das seções claras, com só a linha forte no celular.",
+      "Do imprimir registros e datas como campos de laudo, com algarismos tabulares.",
+      "Do usar as fotografias reais da Dra. Vanessa, uma por lugar, sem legendas.",
+      "Do manter um título por seção, começando na linha esquerda do container."
+    ],
+    "donts": [
+      "Don't voltar ao vermelho vivo, ao rosa ou ao azul da logo antiga como cores da página.",
+      "Don't usar cartões iguais com ícone, título e texto como estrutura.",
+      "Don't colocar rótulos ou sobretítulos acima dos títulos.",
+      "Don't animar blocos ao rolar a página.",
+      "Don't inventar números, prêmios ou depoimentos."
+    ]
+  }
+}

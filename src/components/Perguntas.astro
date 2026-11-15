@@ -1,0 +1,34 @@
+---
+import { faq } from "../data/faq";
+import { whatsappLink } from "../data/site";
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "./Icon.astro";
+
+const duvida = whatsappLink("Olá! Tenho uma dúvida para a Dra. Vanessa Damin:");
+---
+
+<section class="perguntas paper-grid" id="perguntas" aria-labelledby="faq-h">
+  <div class="wrap faq__grid">
+    <div class="section-head faq__head">
+      <h2 id="faq-h">Perguntas frequentes sobre a consulta</h2>
+      <p>Respostas sobre a consulta, os convênios e algumas doenças do coração.</p>
+      <a class="btn btn--ghost faq__ask" href={duvida} target="_blank" rel="noopener">
+        <BrandIcon name="whatsapp" size={18} />
+        Enviar dúvida pelo WhatsApp
+      </a>
+    </div>
+    <div class="faq-list" data-faq>
+      {
+        faq.map((q) => (
+          <details class="faq" id={`pergunta-${q.slug}`} name="faq">
+            <summary>
+              {q.question}
+              <Icon name="plus" size={22} />
+            </summary>
+            <p class="faq__answer" set:html={q.answer} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

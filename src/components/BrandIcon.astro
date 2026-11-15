@@ -1,0 +1,29 @@
+---
+// Ícones de marcas (simple-icons). `colored` usa a cor oficial da marca.
+import { siGoogle, siInstagram, siWhatsapp } from "simple-icons";
+
+const brands = { whatsapp: siWhatsapp, instagram: siInstagram, google: siGoogle } as const;
+
+interface Props {
+  name: keyof typeof brands;
+  size?: number;
+  colored?: boolean;
+  class?: string;
+}
+
+const { name, size = 20, colored = false, class: className } = Astro.props;
+const icon = brands[name];
+---
+
+<svg
+  class:list={["brand-icon", className]}
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill={colored ? `#${icon.hex}` : "currentColor"}
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={icon.path}></path>
+</svg>

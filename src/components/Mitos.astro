@@ -1,0 +1,45 @@
+---
+import { mitos } from "../data/mitos";
+import Icon from "./Icon.astro";
+---
+
+<section class="mitos-section paper-grid" id="mitos" aria-labelledby="mitos-h">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="mitos-h">Mitos e verdades sobre o coração</h2>
+      <p>Seis frases comuns sobre o coração, cada uma com a resposta da cardiologista.</p>
+    </div>
+
+    <div class="mitos" data-mitos>
+      {
+        mitos.map((m, i) => (
+          <>
+            <button
+              class="mito__q"
+              type="button"
+              id={`mito-${m.slug}`}
+              aria-expanded={i === 0 ? "true" : "false"}
+              aria-controls={`mito-${m.slug}-resposta`}
+              data-mito
+            >
+              <span>“{m.claim}”</span>
+              <Icon name="plus" size={22} class="mito__plus" />
+              <Icon name="arrow-right" size={22} class="mito__arrow" />
+            </button>
+            <div
+              class="mito__a"
+              id={`mito-${m.slug}-resposta`}
+              role="region"
+              aria-labelledby={`mito-${m.slug}`}
+              hidden={i !== 0}
+            >
+              <p class="mito__claim" aria-hidden="true">“{m.claim}”</p>
+              <p class:list={["verdict", `verdict--${m.verdict}`]}>{m.verdictLabel}</p>
+              <p>{m.answer}</p>
+            </div>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>

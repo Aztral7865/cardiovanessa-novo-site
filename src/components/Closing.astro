@@ -1,0 +1,62 @@
+---
+import { sections } from "../data/nav";
+import { bookingLink, contact, site } from "../data/site";
+import BrandIcon from "./BrandIcon.astro";
+import Symbol from "./Symbol.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="closing band band--wine" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="close">
+      <h2 class="close__line" id="close-h">{site.tagline}</h2>
+      <p class="close__fact">
+        Consultas com a Dra. Vanessa Damin, cardiologista e clínica médica, em Criciúma (SC). O agendamento é feito pelo
+        WhatsApp.
+      </p>
+      <a class="btn btn--on-dark" href={bookingLink} target="_blank" rel="noopener" data-cta="close">
+        <BrandIcon name="whatsapp" size={20} />
+        Agendar consulta
+      </a>
+    </div>
+
+    <div class="foot">
+      <div class="foot__row">
+        <div class="foot__brand">
+          <Symbol id="foot" tone="inverse" />
+          <p>
+            <strong>{site.name}</strong>
+            {site.specialty}
+          </p>
+        </div>
+        <nav class="foot__col" aria-label="Navegação no rodapé">
+          <p class="foot__title">Navegação</p>
+          <ul>
+            {sections.slice(0, 4).map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="foot__col">
+          <p class="foot__title">Dúvidas</p>
+          <ul>
+            {sections.slice(4).map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+          </ul>
+        </div>
+        <div class="foot__col">
+          <p class="foot__title">Contato</p>
+          <ul>
+            <li><a href={contact.whatsapp} target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href={contact.phoneHref}>Telefone</a></li>
+            <li><a href={`mailto:${contact.email}`}>E-mail</a></li>
+            <li><a href={contact.instagram} target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legal">
+        <p>© <span data-year>{year}</span> Dra. Vanessa Damin. Todos os direitos reservados.</p>
+        <p>Responsável técnica: Dra. Vanessa Damin · <span class="num">{site.registry}</span></p>
+      </div>
+    </div>
+  </div>
+</footer>

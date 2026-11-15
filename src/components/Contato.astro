@@ -1,0 +1,80 @@
+---
+import { contact, site } from "../data/site";
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "./Icon.astro";
+---
+
+<section class="contato paper-grid" id="contato" aria-labelledby="contato-h">
+  <div class="wrap contato__grid">
+    <div class="contato__info">
+      <div class="section-head contato__intro">
+        <h2 id="contato-h">Contato e agendamento de consultas</h2>
+        <p>{site.contactIntro}</p>
+      </div>
+
+      <ul class="contacts">
+        <li class="contact">
+          <span class="contact__label"><BrandIcon name="whatsapp" size={18} />Telefone e WhatsApp</span>
+          <span class="contact__value num">{contact.phoneDisplay}</span>
+          <span class="contact__actions">
+            <a href={contact.whatsapp} target="_blank" rel="noopener">Conversar no WhatsApp<Icon name="arrow-up-right" size={16} /></a>
+            <a href={contact.phoneHref}>Ligar agora<Icon name="phone" size={16} /></a>
+          </span>
+        </li>
+        <li class="contact">
+          <span class="contact__label"><Icon name="map-pin" size={18} />Endereço</span>
+          <span class="contact__value">
+            {contact.address.street}, {contact.address.rooms} - {contact.address.district},
+            <span class="nowrap">{contact.address.city} - {contact.address.state},</span>
+            <span class="nowrap num">{contact.address.zip}</span>
+          </span>
+          <span class="contact__actions">
+            <a href={contact.address.maps} target="_blank" rel="noopener">Como chegar<Icon name="arrow-up-right" size={16} /></a>
+          </span>
+        </li>
+        <li class="contact">
+          <span class="contact__label"><Icon name="mail" size={18} />E-mail</span>
+          <span class="contact__value"><a href={`mailto:${contact.email}`}>{contact.email}</a></span>
+        </li>
+        <li class="contact">
+          <span class="contact__label"><BrandIcon name="instagram" size={18} />Instagram</span>
+          <span class="contact__value"><a href={contact.instagram} target="_blank" rel="noopener">{contact.instagramHandle}</a></span>
+        </li>
+      </ul>
+    </div>
+
+    <form class="form" id="formulario" novalidate data-form aria-labelledby="form-h">
+      <h3 class="form__title" id="form-h">Envie uma mensagem</h3>
+      <p class="form__note">Ao enviar, o WhatsApp abre com a sua mensagem pronta para a Dra. Vanessa.</p>
+
+      <div class="field">
+        <label for="f-nome">Nome completo</label>
+        <input id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="f-nome-erro" />
+        <p class="field__error" id="f-nome-erro">Escreva o seu nome completo.</p>
+      </div>
+      <div class="field">
+        <label for="f-email">E-mail</label>
+        <input
+          id="f-email"
+          name="email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          required
+          aria-describedby="f-email-erro"
+        />
+        <p class="field__error" id="f-email-erro">Escreva um e-mail válido, como nome@exemplo.com.</p>
+      </div>
+      <div class="field">
+        <label for="f-msg">Mensagem</label>
+        <textarea id="f-msg" name="mensagem" rows="4" required aria-describedby="f-msg-erro"></textarea>
+        <p class="field__error" id="f-msg-erro">Escreva a sua mensagem.</p>
+      </div>
+      <button class="btn btn--block" type="submit">
+        <BrandIcon name="whatsapp" size={20} />
+        Enviar pelo WhatsApp
+      </button>
+      <p class="form__sent" role="status" aria-live="polite" data-form-status></p>
+    </form>
+  </div>
+</section>

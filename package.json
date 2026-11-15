@@ -1,0 +1,28 @@
+{
+  "name": "cardiovanessa-novo-site",
+  "description": "Site da Dra. Vanessa Damin, cardiologista em Criciúma (SC).",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "build:preview": "cross-env PREVIEW=true astro build"
+  },
+  "dependencies": {
+    "astro": "^7.4.12",
+    "lucide-static": "^1.73.0",
+    "sharp": "^0.35.5",
+    "simple-icons": "^16.37.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "cross-env": "^10.1.0",
+    "typescript": "^6.0.3"
+  }
+}

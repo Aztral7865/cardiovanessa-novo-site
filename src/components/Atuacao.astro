@@ -1,0 +1,28 @@
+---
+import { areas } from "../data/atuacao";
+import Icon from "./Icon.astro";
+---
+
+<section class="atuacao paper-grid" id="atuacao" aria-labelledby="atuacao-h">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="atuacao-h">Áreas de atuação em cardiologia</h2>
+      <p>Da prevenção cardiovascular ao laudo de exames: as condições do coração que a Dra. Vanessa acompanha.</p>
+    </div>
+    <ul class="areas" data-areas>
+      {
+        areas.map((a) => (
+          <li>
+            <details class="area">
+              <summary>
+                {a.title}
+                <Icon name="plus" size={22} />
+              </summary>
+              <p>{a.description}</p>
+            </details>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+// Ícones de interface do lucide-static, embutidos no HTML (sem requisição extra).
+import arrowRight from "lucide-static/icons/arrow-right.svg?raw";
+import arrowUpRight from "lucide-static/icons/arrow-up-right.svg?raw";
+import arrowDown from "lucide-static/icons/arrow-down.svg?raw";
+import check from "lucide-static/icons/check.svg?raw";
+import chevronDown from "lucide-static/icons/chevron-down.svg?raw";
+import mail from "lucide-static/icons/mail.svg?raw";
+import mapPin from "lucide-static/icons/map-pin.svg?raw";
+import menu from "lucide-static/icons/menu.svg?raw";
+import phone from "lucide-static/icons/phone.svg?raw";
+import plus from "lucide-static/icons/plus.svg?raw";
+import send from "lucide-static/icons/send.svg?raw";
+import star from "lucide-static/icons/star.svg?raw";
+import x from "lucide-static/icons/x.svg?raw";
+
+const icons = {
+  "arrow-right": arrowRight,
+  "arrow-up-right": arrowUpRight,
+  "arrow-down": arrowDown,
+  check,
+  "chevron-down": chevronDown,
+  mail,
+  "map-pin": mapPin,
+  menu,
+  phone,
+  plus,
+  send,
+  star,
+  x,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  stroke?: number;
+  class?: string;
+  fill?: boolean;
+}
+
+const { name, size = 20, stroke = 1.75, class: className, fill = false } = Astro.props;
+
+const inner = icons[name]
+  .replace(/<!--[\s\S]*?-->/g, "")
+  .replace(/^[\s\S]*?<svg[^>]*>/, "")
+  .replace(/<\/svg>\s*$/, "")
+  .trim();
+---
+
+<svg
+  class:list={["icon", className]}
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill={fill ? "currentColor" : "none"}
+  stroke="currentColor"
+  stroke-width={stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={inner}
+/>

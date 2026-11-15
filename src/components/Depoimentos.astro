@@ -1,0 +1,81 @@
+---
+import { contact } from "../data/site";
+import { depoimentos } from "../data/depoimentos";
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "./Icon.astro";
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+// Depoimentos longos mostram um trecho; o resto fica escondido (hidden) até a pessoa pedir.
+const LIMIT = 200;
+const split = (text: string) => {
+  if (text.length <= LIMIT + 40) return { head: text, tail: "" };
+  const cut = text.lastIndexOf(" ", LIMIT);
+  return { head: text.slice(0, cut), tail: text.slice(cut) };
+};
+---
+
+<section class="depoimentos band" id="depoimentos" aria-labelledby="depo-h">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="depo-h">O que os pacientes dizem sobre a consulta</h2>
+      <a class="depo__review" href={contact.reviewLink} target="_blank" rel="noopener">
+        <BrandIcon name="google" size={24} />
+        <span class="link">Deixar avaliação no Google</span>
+        <Icon name="arrow-up-right" size={18} />
+      </a>
+    </div>
+
+    <ul class="depo-list">
+      {
+        depoimentos.map((d, i) => {
+          const { head, tail } = split(d.text);
+          return (
+            <li>
+              <figure class="depo">
+                <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">
+                  {Array.from({ length: 5 }, () => (
+                    <Icon name="star" size={16} fill stroke={1.5} />
+                  ))}
+                </div>
+                <blockquote lang={d.lang}>
+                  <p>
+                    {head}
+                    {tail && (
+                      <>
+                        <span class="depo__dots" aria-hidden="true">…</span>
+                        <span id={`depo-resto-${i}`} hidden>{tail}</span>
+                      </>
+                    )}
+                  </p>
+                </blockquote>
+                {tail && (
+                  <button class="depo__more" type="button" aria-expanded="false" aria-controls={`depo-resto-${i}`} data-depo-more>
+                    <span data-more-label>Ver depoimento completo</span>
+                    <Icon name="chevron-down" size={18} />
+                  </button>
+                )}
+                <figcaption>
+                  <span class="depo__initials" aria-hidden="true">
+                    {initials(d.author)}
+                  </span>
+                  <span class="depo__name">{d.author}</span>
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })
+      }
+    </ul>
+    <button class="depo__more depo-list__more" type="button" data-depo-all>
+      Ver mais {depoimentos.length - 3} depoimentos
+      <Icon name="chevron-down" size={18} />
+    </button>
+  </div>
+</section>

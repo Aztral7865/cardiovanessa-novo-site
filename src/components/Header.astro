@@ -1,0 +1,69 @@
+---
+import { sections } from "../data/nav";
+import { bookingLink, contact } from "../data/site";
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "./Icon.astro";
+import Symbol from "./Symbol.astro";
+---
+
+<header class="nav" data-nav>
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <a class="brand" href="#topo" aria-label="Dra. Vanessa Damin, início da página">
+      <Symbol id="nav" />
+      <span class="brand__name">Dra. Vanessa Damin</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Seções">
+      {sections.map((s) => <a href={`#${s.id}`} data-nav-link={s.id}>{s.short}</a>)}
+    </nav>
+
+    <a class="btn nav__cta" href={bookingLink} target="_blank" rel="noopener" data-cta="nav">
+      <BrandIcon name="whatsapp" size={18} />
+      Agendar consulta
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <Icon name="menu" class="icon--open" />
+      <Icon name="x" class="icon--close" />
+      <span data-menu-label>Menu</span>
+    </button>
+  </div>
+
+  <div class="nav__trace" aria-hidden="true" data-progress>
+    <svg preserveAspectRatio="none">
+      <path class="trace-rest" fill="none" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"
+      ></path>
+      <path class="trace-done" fill="none" stroke-width="1.75" vector-effect="non-scaling-stroke" stroke-linejoin="round"
+      ></path>
+    </svg>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-menu aria-label="Menu" role="dialog" aria-modal="true">
+  <div class="wrap menu__inner">
+    <ol class="menu__list">
+      {
+        sections.map((s, i) => (
+          <li>
+            <a href={`#${s.id}`} style={`--i: ${i}`} data-menu-link>
+              <span class="num">{String(i + 1).padStart(2, "0")}</span>
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="menu__foot">
+      <a class="btn btn--block" href={bookingLink} target="_blank" rel="noopener">
+        <BrandIcon name="whatsapp" size={20} />
+        Agendar consulta
+      </a>
+      <div class="menu__contacts">
+        <a href={contact.phoneHref}><Icon name="phone" size={18} />Ligar</a>
+        <a href={contact.instagram} target="_blank" rel="noopener"><BrandIcon name="instagram" size={18} />Instagram</a>
+        <a href={`mailto:${contact.email}`}><Icon name="mail" size={18} />E-mail</a>
+      </div>
+    </div>
+  </div>
+</div>

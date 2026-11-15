@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import foto from "../assets/photos/vanessa-estudio.jpg";
+import { site } from "../data/site";
+---
+
+<section class="sobre paper-grid" id="sobre" aria-labelledby="sobre-h">
+  <div class="wrap sobre__grid">
+    <div class="sobre__text">
+      <div class="section-head">
+        <h2 id="sobre-h">Sobre a cardiologista</h2>
+        <p>{site.specialty}, com consultório em Criciúma (SC).</p>
+      </div>
+      <div class="sobre__body">
+        {site.about.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    <figure class="sobre__photo" data-moment="picture-develops">
+      <Image
+        src={foto}
+        format="webp"
+        widths={[420, 640, 900, 1200]}
+        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, 100vw"
+        alt="Dra. Vanessa Damin de jaleco, sentada e apoiando o queixo na mão, em estúdio"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>

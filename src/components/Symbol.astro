@@ -1,0 +1,39 @@
+---
+// Símbolo vetorizado (coração em fita + ECG). `tone`: "color" sobre papel, "inverse" sobre bordô.
+import { symbol } from "../data/symbol";
+
+interface Props {
+  tone?: "color" | "inverse";
+  class?: string;
+  /** texto alternativo; sem ele o símbolo é decorativo */
+  title?: string;
+  id: string;
+}
+
+const { tone = "color", class: className, title, id } = Astro.props;
+const gid = `sym-${id}`;
+const palette =
+  tone === "inverse"
+    ? { a: "#F6E3E5", b: "#E2B8BE", fold: "#C38A92", ecg: "#FBF3F2" }
+    : { a: "#A21F37", b: "#5C0E1D", fold: "#3A0812", ecg: "#1F0E12" };
+---
+
+<svg
+  class:list={["symbol", className]}
+  viewBox={symbol.viewBox}
+  xmlns="http://www.w3.org/2000/svg"
+  role={title ? "img" : undefined}
+  aria-label={title}
+  aria-hidden={title ? undefined : "true"}
+  focusable="false"
+>
+  <defs>
+    <linearGradient id={gid} x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+      <stop offset="0" stop-color={palette.a}></stop>
+      <stop offset="1" stop-color={palette.b}></stop>
+    </linearGradient>
+  </defs>
+  <path d={symbol.ribbon} fill={`url(#${gid})`} fill-rule="evenodd"></path>
+  <path d={symbol.fold} fill={palette.fold} fill-rule="evenodd"></path>
+  <path d={symbol.ecg} fill={palette.ecg} fill-rule="evenodd"></path>
+</svg>

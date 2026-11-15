@@ -1,0 +1,64 @@
+---
+import { Picture } from "astro:assets";
+import retrato from "../assets/photos/vanessa-estetoscopio.jpg";
+import { bookingLink, site } from "../data/site";
+import { tracePath } from "../lib/ecg";
+import BrandIcon from "./BrandIcon.astro";
+import Icon from "./Icon.astro";
+
+// pulso de calibração logo depois da margem esquerda da página (x = 400 no SVG, que começa 388 px antes)
+const trace = tracePath({ width: 2400, baseline: 70, calibration: true, lead: 400, rr: 84 });
+---
+
+<section class="hero paper-grid" id="topo" data-enter aria-labelledby="hero-h">
+  <div class="wrap">
+  <div class="hero-text hero__grid">
+    <h1 class="hero__title" id="hero-h">
+      <span class="hero__name"><span class="hero__pre">Dra.</span> Vanessa Damin</span><span class="sr-only">,</span>
+      <span class="hero__cat">cardiologista e clínica médica em Criciúma</span>
+    </h1>
+
+    <figure class="hero__photo">
+      <Picture
+        src={retrato}
+        formats={["avif", "webp"]}
+        widths={[420, 640, 860, 1100, 1400]}
+        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, 100vw"
+        alt="Dra. Vanessa Damin de jaleco branco, segurando o estetoscópio, sorrindo"
+        priority
+      />
+    </figure>
+
+    <div class="hero__trace" aria-hidden="true">
+      <svg viewBox="0 0 2400 96" width="2400" height="96"><path d={trace}></path></svg>
+    </div>
+
+    <p class="hero__lead">
+      Cuidado completo e humanizado para a saúde do seu coração. Meu compromisso é com a sua qualidade de vida, através da
+      <strong>prevenção</strong>, <strong>diagnóstico preciso</strong> e <strong>tratamento individualizado</strong>.
+    </p>
+
+    <dl class="fields" aria-label="Registro profissional">
+      {
+        site.registryParts.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="hero__actions">
+      <a class="btn" href={bookingLink} target="_blank" rel="noopener" data-cta="hero">
+        <BrandIcon name="whatsapp" size={20} />
+        Agendar consulta
+      </a>
+      <a class="btn btn--ghost" href="#atuacao">
+        Ver áreas de atuação
+        <Icon name="arrow-down" size={18} class="btn__arrow" />
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
