@@ -1,6 +1,8 @@
 ---
 import { Picture } from "astro:assets";
 import retrato from "../assets/photos/vanessa-estetoscopio.jpg";
+// o mesmo retrato com o fundo transparente (tools/recorte.py): fica na frente do traçado
+import recorte from "../assets/photos/vanessa-estetoscopio-recorte.webp";
 import { bookingLink, site } from "../data/site";
 import { tracePath } from "../lib/ecg";
 import BrandIcon from "./BrandIcon.astro";
@@ -31,6 +33,19 @@ const trace = tracePath({ width: 2400, baseline: 70, calibration: true, lead: 40
 
     <div class="hero__trace" aria-hidden="true">
       <svg viewBox="0 0 2400 96" width="2400" height="96"><path d={trace}></path></svg>
+    </div>
+
+    <!-- a médica na frente do traçado: o retrato recortado, alinhado à foto, por cima da linha -->
+    <div class="hero__cutout" aria-hidden="true">
+      <Picture
+        src={recorte}
+        formats={["avif", "webp"]}
+        widths={[420, 640, 860, 1100, 1400]}
+        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, 100vw"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
 
     <p class="hero__lead">

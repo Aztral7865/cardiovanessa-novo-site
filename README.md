@@ -23,6 +23,7 @@ npm run preview    # serve a pasta dist/
 | Cores, tipografia e layout | `src/styles/global.css` (sistema documentado em `DESIGN.md`) |
 | Comportamento (menu, listas, formulário → WhatsApp) | `src/scripts/site.ts` |
 | Fotos | `src/assets/photos/` (geradas por `tools/prepare-photos.mjs`) |
+| Recorte da abertura (o traçado passa por trás da médica) | `src/assets/photos/vanessa-estetoscopio-recorte.webp` (gerado por `tools/recorte.py`) |
 | Símbolo da logo (SVG) | `src/data/symbol.ts` (vetorizado por `tools/logo/vectorize.py` com potrace) |
 | Favicon e ícones | `public/` (gerados por `tools/make-icons.mjs`) |
 
@@ -47,4 +48,5 @@ O workflow `.github/workflows/deploy.yml` faz o build e publica a cada push na b
 node tools/prepare-photos.mjs <pasta-com-as-fotos-originais>   # reduz e recorta as fotos de estúdio
 node tools/make-icons.mjs                                       # favicon, ícones e manifest
 python tools/logo/vectorize.py tools/logo/logo-original.jpg tools/logo/out   # requer potracer, numpy e pillow
+python tools/recorte.py   # refaz o recorte da foto da abertura; requer opencv-python, numpy e pillow (rodar de novo se a foto mudar)
 ```

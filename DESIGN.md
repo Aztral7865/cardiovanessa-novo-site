@@ -193,7 +193,7 @@ Grade de campos com filete superior: rótulo em condensada 13 px (tinta de rótu
 Três capítulos fixos (Formação, Plantão e emergência, Docência), cada um com uma foto e uma lista de laudo sob um filete bordô de 3 px. Celular: um abaixo do outro, foto 4:3. Tablet em pé: foto 4:5 ao lado da lista. Desktop: três colunas com fotos quadradas; a partir de 1280 px o título vai para a coluna da esquerda e a seção cabe numa tela. Sem efeito de rolagem.
 
 ### ECG Trace (signature)
-Caminho SVG gerado em `src/lib/ecg.ts` na escala do papel (25 mm/s, 10 mm/mV): pulso de calibração 40 × 20 px e complexos P-QRS-T a cada 84 px, todos em segmentos retos (P e T são triângulos, sem curvas). Cantos em ponta (`stroke-linejoin: miter`, limite 2,5): os picos agudos R e S saem chanfrados. Traço branco em `mix-blend-mode: difference`, que fica escuro no papel e claro sobre a foto. Desenha-se uma vez, em 1,5 s.
+Caminho SVG gerado em `src/lib/ecg.ts` na escala do papel (25 mm/s, 10 mm/mV): pulso de calibração 40 × 20 px e complexos P-QRS-T a cada 84 px, todos em segmentos retos (P e T são triângulos, sem curvas). Cantos em ponta (`stroke-linejoin: miter`, limite 2,5): os picos agudos R e S saem chanfrados. Traço branco em `mix-blend-mode: difference`, que fica escuro no papel e claro sobre o fundo da foto. Na abertura ele passa por trás da Dra. Vanessa: o retrato recortado (`vanessa-estetoscopio-recorte.webp`, gerado por `tools/recorte.py`) fica numa camada acima da linha, na mesma caixa e com o mesmo enquadramento da foto, e entra junto com ela. Desenha-se uma vez, em 1,5 s.
 
 ## Do's and Don'ts
 

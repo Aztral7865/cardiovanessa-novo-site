@@ -25,3 +25,6 @@ Thumbs.db
 
 # estado local das skills de design
 .taste-skill/
+
+# PDFs de apresentação para a cliente (ficam só na máquina)
+apresentacao/
