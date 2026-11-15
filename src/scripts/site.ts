@@ -89,7 +89,8 @@ function initProgress() {
     for (const s of sections.slice(1)) {
       const x = Math.round((Math.min(s.offsetTop, max) / max) * w);
       if (x < 10 || x > w - 16) continue;
-      d += ` L${x - 6} ${y} L${x - 4} ${y + 1.5} L${x - 1.5} ${y - h + 3} L${x + 1.5} ${y + 2} L${x + 3.5} ${y} Q${x + 8} ${y - 4} ${x + 12} ${y}`;
+      // um batimento em traço reto: Q, R, S e a onda T em triângulo
+      d += ` L${x - 6} ${y} L${x - 4} ${y + 1.5} L${x - 1.5} ${y - h + 3} L${x + 1.5} ${y + 2} L${x + 3.5} ${y} L${x + 6} ${y} L${x + 9} ${y - 3} L${x + 12} ${y}`;
     }
     d += ` L${w} ${y}`;
     rest.setAttribute("d", d);
@@ -320,23 +321,6 @@ function initDeepLinks(openers: Array<((id: string) => boolean) | undefined>) {
   addEventListener("hashchange", open);
 }
 
-/* ---------- capítulos da trajetória: altura do painel para a foto não ficar atrás dele -- */
-function initChapters() {
-  const section = document.getElementById("trajetoria");
-  if (!section) return;
-  let ro: ResizeObserver | null = null;
-  const hook = () => {
-    const panel = $<HTMLElement>(".mo-ph__panel", section);
-    const stage = $<HTMLElement>(".mo-ph__stage", section);
-    if (!panel || !stage) return;
-    ro?.disconnect();
-    ro = new ResizeObserver(() => stage.style.setProperty("--panel-h", `${panel.offsetHeight}px`));
-    ro.observe(panel);
-  };
-  new MutationObserver(hook).observe(section, { attributes: true, attributeFilter: ["class"] });
-  hook();
-}
-
 /* ---------- ano no rodapé ---------------------------------------------------- */
 function initYear() {
   const y = String(new Date().getFullYear());
@@ -350,7 +334,6 @@ initAreas();
 const openMito = initMitos();
 const openFaq = initFaq();
 initDepoimentos();
-initChapters();
 initForm();
 initDeepLinks([openFaq, openMito]);
 initYear();

@@ -108,7 +108,7 @@
     --t-h3: 26px;
     --t-h2: 48px;
     --t-name: clamp(56px, 5.6vw, 88px);
-    --padt: 140px;
+    --padt: 120px;
     --padb: 72px;
   }
 }
@@ -263,10 +263,29 @@ footer.closing {
   padding-bottom: calc(var(--padb) + var(--bar));
 }
 
+/* no celular e no tablet em pé cada seção tem a altura do próprio conteúdo, com o mesmo
+   respiro entre todas. Ao chegar por um link do menu, o título fica 40 px abaixo do
+   cabeçalho fixo. */
+@media (max-width: 1023px) {
+  main > section:not(.hero),
+  footer.closing {
+    min-height: 0;
+    padding-top: 88px;
+    padding-bottom: 88px;
+    scroll-margin-top: 16px;
+  }
+}
+
 @media (max-width: 639px) {
   main > section:not(.hero),
   footer.closing {
-    min-height: calc(var(--hm, var(--h, 1)) * 100lvh);
+    padding-top: var(--s-8);
+    padding-bottom: var(--s-8);
+    scroll-margin-top: 40px;
+  }
+
+  footer.closing {
+    padding-bottom: calc(var(--s-6) + var(--bar));
   }
 }
 
@@ -313,41 +332,23 @@ h2 {
   max-width: 44rem;
 }
 
-.section-head h2,
-.trajetoria .mo-ph__head h2,
-.close__line {
-  position: relative;
-}
-
-/* pulso de calibração (1 mV) na margem de cada título: o início de cada derivação no papel */
-.section-head h2::before {
+/* um batimento sob cada título, no mesmo traço reto do cabeçalho: cada seção é um batimento
+   do traçado de progresso. Fica na linha do texto, sem invadir a margem. */
+.section-head h2::after {
   content: "";
-  position: absolute;
-  top: 0.24em;
-  left: calc(-0.5em - clamp(6px, 0.9vw, 16px));
-  width: 0.5em;
-  height: 0.62em;
-  background: currentColor;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M0 22.5h4.5V1.5h11v21H20' fill='none' stroke='%23000' stroke-width='2.4' stroke-linejoin='miter'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M0 22.5h4.5V1.5h11v21H20' fill='none' stroke='%23000' stroke-width='2.4' stroke-linejoin='miter'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  color: var(--oxblood);
+  display: block;
+  width: 64px;
+  height: 16px;
+  margin-top: var(--s-3);
+  background: var(--oxblood);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 16'%3E%3Cpath d='M0 11H14L17 8.5L20 11H24L25.5 13L28.5 1.5L31.5 14.5L33.5 11H38L42 7L45 11H64' fill='none' stroke='black' stroke-width='2' stroke-miterlimit='2.5'/%3E%3C/svg%3E")
+    left center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 16'%3E%3Cpath d='M0 11H14L17 8.5L20 11H24L25.5 13L28.5 1.5L31.5 14.5L33.5 11H38L42 7L45 11H64' fill='none' stroke='black' stroke-width='2' stroke-miterlimit='2.5'/%3E%3C/svg%3E")
+    left center / 100% 100% no-repeat;
 }
 
-@media (max-width: 639px) {
-  .section-head h2::before,
-  .trajetoria .mo-ph__head h2::before {
-    width: 12px;
-    height: 15px;
-    left: -18px;
-    top: 0.32em;
-  }
-}
-
-.band .section-head h2::before,
-.closing .section-head h2::before {
-  color: var(--on-dark-2);
+.band .section-head h2::after {
+  background: var(--on-dark-2);
 }
 
 .section-head p {
@@ -827,7 +828,6 @@ html.menu-open {
 
 .hero {
   --h: 1;
-  --hm: 1;
   position: relative;
   height: 100svh;
   min-height: 0;
@@ -962,12 +962,13 @@ html.menu-open {
   max-width: none;
 }
 
+/* cantos vivos, como num monitor: os picos agudos (R e S) ficam chanfrados, o resto em ponta */
 .hero__trace path {
   fill: none;
   stroke: #ffffff;
   stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 2.5;
 }
 
 @media (max-width: 639px) and (max-height: 760px) {
@@ -1185,35 +1186,43 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 }
 
 /* ==========================================================================
-   Trajetória (photo-chapters)
+   Formação e experiência: três capítulos, cada um com a sua foto e a sua lista
+   de laudo. Nada fica preso na tela; a seção rola como as outras.
    ========================================================================== */
 
-#trajetoria .mo-ph__head {
-  max-width: 48rem;
+.traj__list {
+  display: grid;
+  gap: var(--s-7);
 }
 
-.trajetoria .mo-ph__head h2::before {
-  content: "";
-  position: absolute;
-  top: 0.24em;
-  left: calc(-0.5em - clamp(6px, 0.9vw, 16px));
-  width: 0.5em;
-  height: 0.62em;
-  background: var(--oxblood);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M0 22.5h4.5V1.5h11v21H20' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 24'%3E%3Cpath d='M0 22.5h4.5V1.5h11v21H20' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  transform: translateY(0.04em);
+.chapter {
+  display: grid;
+  align-content: start;
 }
 
-.trajetoria .mo-ph__head p {
-  font-size: var(--t-lead);
-  line-height: 1.5;
-  color: var(--ink-2);
+.chapter__pic {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--paper-2);
 }
 
-.trajetoria .mo-ph__ch h3 {
+.chapter__pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* o filete bordô sob a foto é a borda do laudo de cada capítulo */
+.chapter__body {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 3px solid var(--oxblood);
+}
+
+.chapter h3 {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--t-h3);
@@ -1253,75 +1262,52 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   color: var(--ink-2);
 }
 
-.trajetoria.is-live .mo-ph__stage {
-  border-radius: 0;
+/* tablet em pé: foto ao lado da lista, um capítulo por linha */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .chapter {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+
+  .chapter__pic {
+    grid-column: 1 / span 5;
+    aspect-ratio: 4 / 5;
+  }
+
+  .chapter__body {
+    grid-column: 6 / span 7;
+  }
 }
 
-.trajetoria.is-live .mo-ph__panel {
-  border-top: 3px solid var(--oxblood);
-  box-shadow: 0 18px 40px -24px rgb(31 14 18 / 0.45);
-}
-
-.trajetoria.is-live .mo-ph__count {
-  font-family: var(--font-display);
-  color: var(--oxblood);
-  letter-spacing: 0.04em;
-}
-
+/* computador: os três capítulos lado a lado */
 @media (min-width: 1024px) {
-  #trajetoria.is-live .mo-ph__panel {
-    width: min(480px, calc(100% - 2 * var(--s-5)));
+  .traj__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+
+  /* recorte quadrado: lado a lado, as poses (braços cruzados, jaleco bordado, a dupla) se distinguem */
+  .chapter__pic {
+    aspect-ratio: 1 / 1;
   }
 }
 
-/* no celular o painel fica embaixo da foto, sem cobrir o rosto */
-@media (max-width: 639px) {
-  #trajetoria.is-live > .mo-ph {
-    gap: var(--s-4);
-    padding-top: calc(var(--nav) + var(--s-4));
-    padding-bottom: calc(var(--s-4) + var(--bar, 0px));
+/* telas largas: o título vai para a coluna da esquerda e a seção cabe numa tela */
+@media (min-width: 1280px) {
+  .traj {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    align-items: start;
   }
 
-  #trajetoria.is-live .mo-ph__head {
-    gap: var(--s-2);
+  .traj__head {
+    grid-column: 1 / span 3;
+    margin-bottom: 0;
   }
 
-  #trajetoria.is-live .mo-ph__head h2 {
-    font-size: 28px;
-  }
-
-  #trajetoria.is-live .mo-ph__head p {
-    font-size: 15px;
-  }
-
-  #trajetoria.is-live .mo-ph__stage > .mo-ph__pic {
-    inset: 0 0 auto 0;
-    height: calc(100% - var(--panel-h, 60%));
-    min-height: 120px;
-  }
-
-  #trajetoria.is-live .mo-ph__panel {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    padding: var(--s-4) var(--s-4) var(--s-3);
-    gap: var(--s-2);
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  #trajetoria.is-live .mo-ph__ch h3 {
-    font-size: 21px;
-  }
-
-  #trajetoria.is-live .traj-items li {
-    padding: 6px 0;
-  }
-
-  #trajetoria.is-live .traj-items__title {
-    font-size: 14.5px;
-    line-height: 1.35;
+  .traj__list {
+    grid-column: 4 / span 9;
   }
 }
 
@@ -1396,7 +1382,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   .area {
     border-top: 1px solid var(--line-strong);
     border-bottom: 0;
-    padding: 14px 0 18px;
+    padding: 12px 0 14px;
   }
 
   .area summary {
@@ -1937,6 +1923,11 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   overflow-wrap: break-word;
 }
 
+/* nome da clínica onde fica o consultório, numa linha própria acima da rua */
+.contact__place {
+  display: block;
+}
+
 .nowrap {
   white-space: nowrap;
 }
@@ -1992,7 +1983,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 .form__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: var(--t-h3);
   line-height: 1.15;
 }
 
@@ -2102,6 +2093,13 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   gap: var(--s-8);
   min-height: calc(100svh - var(--padt) - var(--padb) - var(--bar));
   align-content: space-between;
+}
+
+/* no celular e no tablet o rodapé acompanha o conteúdo, sem esticar até o fim da tela */
+@media (max-width: 1023px) {
+  .closing > .wrap {
+    min-height: 0;
+  }
 }
 
 .close {
@@ -2216,7 +2214,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 .foot__col a {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px;
   color: var(--on-dark);
   text-decoration: none;
   font-size: 15.5px;
@@ -2267,7 +2265,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 }
 
 /* ==========================================================================
-   Celular: cada seção ocupa uma ou duas telas cheias
+   Celular: ajustes de lista e de altura
    ========================================================================== */
 
 .depo-list__more {
@@ -2282,14 +2280,6 @@ html.m-enter-done .hero[data-enter] .hero__trace {
     background-size:
       20px 20px,
       20px 20px;
-  }
-
-  .sobre,
-  .atuacao,
-  .depoimentos,
-  .contato,
-  footer.closing {
-    --hm: 2;
   }
 
   .sobre__photo {
@@ -2307,11 +2297,6 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   .faq summary {
     min-height: 60px;
     font-size: 16.5px;
-  }
-
-  .faq__head p,
-  .mitos-section .section-head p {
-    display: none;
   }
 
   .mitos-section .section-head {

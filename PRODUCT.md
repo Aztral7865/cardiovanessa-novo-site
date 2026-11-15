@@ -40,7 +40,7 @@ Uma cardiologista que reúne, ao mesmo tempo:
 
 - Canal principal de agendamento: WhatsApp `+55 48 99211-6200` (link `wa.me/5548992116200` com mensagem pré-preenchida).
 - O formulário de contato não tem servidor: ao enviar, monta a mensagem (nome, e-mail, mensagem) e abre o WhatsApp. Essa função deve ser mantida.
-- Endereço: Rua Antônio de Lucca, 148, sala 102 e 111 - Pio Corrêa, Criciúma - SC, 88811-503 (link do Google Maps aponta para o local "Aura Neurologia").
+- Endereço (corrigido pelo cliente em nov/2026): consultório na clínica Aura Neurologia, Rua Antônio de Lucca, 148, sala 111 - Pio Corrêa, Criciúma - SC, 88811-503. O link "Como chegar" abre a ficha "Aura Neurologia" no Google Maps.
 - E-mail: dravanessadamin@gmail.com. Instagram: @vanessadamincardiologista.
 - Link para deixar avaliação no Google: `https://g.page/r/CYMbpqRkVXzCEAI/review`.
 - Arquivo de verificação do Google Search Console: `googlec3cbfcb27719cc4b.html` (deve continuar servido na raiz em produção).

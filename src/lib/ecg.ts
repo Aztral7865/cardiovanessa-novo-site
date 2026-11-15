@@ -2,6 +2,8 @@
  * Gera o caminho SVG de um traçado de ECG na escala do papel do site:
  * 4 px = 1 mm, 25 mm/s, 10 mm/mV. Um complexo P-QRS-T ocupa ~51 px e, a 75 bpm,
  * os batimentos se repetem a cada 80 px (RR). O pulso de calibração (1 mV) tem 40 × 20 px.
+ * Todo o traço é feito de segmentos retos, como num monitor: as ondas P e T são
+ * triângulos, sem curvas.
  */
 
 export interface TraceOptions {
@@ -47,22 +49,21 @@ export function tracePath(o: TraceOptions): string {
   const beat = (bx: number) => {
     if (bx + 51 > o.width) return false;
     line(bx);
-    // onda P
-    parts.push(`C${r(bx + 2.5)} ${r(y0 - 7 * g)} ${r(bx + 7.5)} ${r(y0 - 7 * g)} ${r(bx + 10)} ${r(y0)}`);
-    x = bx + 10;
+    // onda P: triângulo baixo
+    line(bx + 5, y0 - 5.5 * g);
+    line(bx + 10);
     // segmento PR
-    line(x + 6);
+    line(bx + 16);
     // complexo QRS
-    const q = x;
-    line(q + 2, y0 + 4 * g);
-    line(q + 5, y0 - 48 * g);
-    line(q + 8.5, y0 + 13 * g);
-    line(q + 11, y0);
+    line(bx + 18, y0 + 4 * g);
+    line(bx + 21, y0 - 48 * g);
+    line(bx + 24.5, y0 + 13 * g);
+    line(bx + 27);
     // segmento ST
-    line(x + 8);
-    // onda T
-    parts.push(`C${r(x + 4)} ${r(y0 - 13 * g)} ${r(x + 12)} ${r(y0 - 13 * g)} ${r(x + 16)} ${r(y0)}`);
-    x = x + 16;
+    line(bx + 35);
+    // onda T: sobe devagar e desce mais rápido
+    line(bx + 44, y0 - 10 * g);
+    line(bx + 51);
     return true;
   };
 

@@ -8,63 +8,66 @@ import { experiencia, formacao } from "../data/trajetoria";
 const [medicina, clinica, cardio, cursos] = formacao;
 const [plantao, ufsc, samu, uti] = experiencia;
 
+// três capítulos fixos, cada um com a sua foto e a sua lista de laudo
 const capitulos = [
   {
     title: "Formação",
     items: [medicina, clinica, cardio, cursos],
     img: formacaoFoto,
     alt: "Dra. Vanessa Damin de jaleco, braços cruzados, sorrindo",
-    pos: "50% 16%",
+    pos: "50% 6%",
   },
   {
     title: "Plantão e emergência",
     items: [plantao, samu, uti],
     img: plantaoFoto,
     alt: "Dra. Vanessa Damin de jaleco, com as mãos nos bolsos",
-    pos: "50% 12%",
+    pos: "50% 10%",
   },
   {
     title: "Docência",
     items: [ufsc],
     img: docenciaFoto,
     alt: "Dra. Vanessa Damin e Dr. Fernando, de jaleco",
-    pos: "50% 10%",
+    pos: "50% 4%",
   },
 ];
 ---
 
-<section class="trajetoria paper-grid" id="trajetoria" data-moment="photo-chapters" aria-labelledby="traj-h">
-  <div class="wrap mo-ph">
-    <div class="mo-ph__head">
+<section class="trajetoria paper-grid" id="trajetoria" aria-labelledby="traj-h">
+  <div class="wrap traj">
+    <div class="section-head traj__head">
       <h2 id="traj-h">Formação e experiência da cardiologista</h2>
       <p>Residências em Clínica Médica e Cardiologia, anos de urgência e emergência e docência na UFSC.</p>
     </div>
-    <ol class="mo-ph__list">
+    <ol class="traj__list">
       {
         capitulos.map((c) => (
-          <li class="mo-ph__ch">
-            <figure class="mo-ph__pic">
+          <li class="chapter">
+            <figure class="chapter__pic">
               <Image
                 src={c.img}
                 format="webp"
-                widths={[480, 800, 1200, 1600]}
-                sizes="(min-width: 1440px) 1280px, 100vw"
+                widths={[360, 560, 720, 1000]}
+                sizes="(min-width: 1280px) 310px, (min-width: 1024px) 30vw, (min-width: 640px) 38vw, calc(100vw - 48px)"
                 alt={c.alt}
                 loading="lazy"
                 style={`object-position: ${c.pos}`}
               />
             </figure>
-            <h3>{c.title}</h3>
-            <ul class="traj-items">
-              {c.items.map((m) => (
-                <li>
-                  <span class="traj-items__period num">{m.period}</span>
-                  <span class="traj-items__title">
-                    {m.title}{m.place && <span class="traj-items__place"> · {m.place}</span>}{m.note && <span class="traj-items__place">, {m.note}</span>}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div class="chapter__body">
+              <h3>{c.title}</h3>
+              <ul class="traj-items">
+                {c.items.map((m) => (
+                  <li>
+                    <span class="traj-items__period num">{m.period}</span>
+                    <span class="traj-items__title">
+                      {m.title}{m.place && <span class="traj-items__place"> · {m.place}</span>}{m.note && <span class="traj-items__place">, {m.note}</span>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </li>
         ))
       }

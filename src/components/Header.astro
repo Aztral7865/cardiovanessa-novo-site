@@ -32,10 +32,20 @@ import Symbol from "./Symbol.astro";
 
   <div class="nav__trace" aria-hidden="true" data-progress>
     <svg preserveAspectRatio="none">
-      <path class="trace-rest" fill="none" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"
-      ></path>
-      <path class="trace-done" fill="none" stroke-width="1.75" vector-effect="non-scaling-stroke" stroke-linejoin="round"
-      ></path>
+      <path
+        class="trace-rest"
+        fill="none"
+        stroke-width="1.5"
+        vector-effect="non-scaling-stroke"
+        stroke-linejoin="miter"
+        stroke-miterlimit="2.5"></path>
+      <path
+        class="trace-done"
+        fill="none"
+        stroke-width="1.75"
+        vector-effect="non-scaling-stroke"
+        stroke-linejoin="miter"
+        stroke-miterlimit="2.5"></path>
     </svg>
   </div>
 </header>

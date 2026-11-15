@@ -24,7 +24,9 @@ import Icon from "./Icon.astro";
         <li class="contact">
           <span class="contact__label"><Icon name="map-pin" size={18} />Endereço</span>
           <span class="contact__value">
-            {contact.address.street}, {contact.address.rooms} - {contact.address.district},
+            <span class="contact__place">{contact.address.place}</span>
+            {contact.address.street}, {contact.address.rooms} -
+            <span class="nowrap">{contact.address.district},</span>
             <span class="nowrap">{contact.address.city} - {contact.address.state},</span>
             <span class="nowrap num">{contact.address.zip}</span>
           </span>

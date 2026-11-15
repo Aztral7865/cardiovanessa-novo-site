@@ -46,16 +46,18 @@ export const contact = {
   instagram: "https://www.instagram.com/vanessadamincardiologista/",
   reviewLink: "https://g.page/r/CYMbpqRkVXzCEAI/review",
   address: {
+    // o consultório fica dentro da clínica Aura Neurologia
+    place: "Aura Neurologia",
     street: "Rua Antônio de Lucca, 148",
-    rooms: "sala 102 e 111",
+    rooms: "sala 111",
     district: "Pio Corrêa",
     city: "Criciúma",
     state: "SC",
     zip: "88811-503",
-    full: "Rua Antônio de Lucca, 148, sala 102 e 111 - Pio Corrêa, Criciúma - SC, 88811-503",
-    // rota no Google Maps até o endereço do consultório
+    full: "Aura Neurologia, Rua Antônio de Lucca, 148, sala 111 - Pio Corrêa, Criciúma - SC, 88811-503",
+    // abre a ficha da Aura Neurologia no Google Maps (a busca com nome e rua leva direto ao local)
     maps: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      "Rua Antônio de Lucca, 148 - Pio Corrêa, Criciúma - SC",
+      "Aura Neurologia, Rua Antônio de Lucca, 148 - Pio Corrêa, Criciúma - SC",
     )}`,
   },
 } as const;

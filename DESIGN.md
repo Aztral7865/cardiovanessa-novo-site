@@ -92,13 +92,13 @@ components:
 
 **Creative North Star: "O Traçado"**
 
-O site inteiro é um laudo de eletrocardiograma lido com calma. O papel térmico branco com grade milimetrada é o chão da página; o traçado com o pulso de calibração (o degrau de 1 mV que abre cada derivação) é o fio condutor; os dados são impressos como campos de laudo, com rótulo em condensada e valor em algarismos tabulares. O bordô escuro ocupa regiões inteiras, nunca respingos: é ele que dá seriedade, no lugar do vermelho vivo do site anterior, que lia como infantil.
+O site inteiro é um laudo de eletrocardiograma lido com calma. O papel térmico branco com grade milimetrada é o chão da página; o traçado com o pulso de calibração (o degrau de 1 mV que abre cada derivação), feito só de segmentos retos como num monitor, é o fio condutor; os dados são impressos como campos de laudo, com rótulo em condensada e valor em algarismos tabulares. O bordô escuro ocupa regiões inteiras, nunca respingos: é ele que dá seriedade, no lugar do vermelho vivo do site anterior, que lia como infantil.
 
-A densidade é de documento médico: filetes de 1 px, listas em vez de cartões, cantos retos, quase nenhuma sombra. A emoção vem das fotografias reais da médica e de um único gesto de movimento por tela (o traçado que se desenha na abertura, a foto que se revela, os capítulos da trajetória). O celular manda: tudo nasce em 390 px e cresce para o desktop.
+A densidade é de documento médico: filetes de 1 px, listas em vez de cartões, cantos retos, quase nenhuma sombra. A emoção vem das fotografias reais da médica e de poucos gestos de movimento (o traçado que se desenha na abertura e a foto que se revela no Sobre). Nada prende a rolagem. O celular manda: tudo nasce em 390 px e cresce para o desktop.
 
 **Key Characteristics:**
 - Grade milimetrada sutil (4 px = 1 mm, linha forte a cada 20 px) como fundo das seções claras.
-- Traçado de ECG em SVG com pulso de calibração, desenhado uma vez.
+- Traçado de ECG em SVG com pulso de calibração, só com segmentos retos (ondas P e T em triângulo), desenhado uma vez.
 - Bordô (#6B1222) e vinho (#3E0A14) em faixas de largura total.
 - Campos de laudo: rótulo condensado, valor tabular, filete por cima.
 - Uma única ação dominante: "Agendar consulta", sempre o mesmo bloco bordô.
@@ -108,7 +108,7 @@ A densidade é de documento médico: filetes de 1 px, listas em vez de cartões,
 Uma só família de cor, do vinho quase preto ao rosado do papel; o azul e o rosa da logo antiga foram achatados no bordô.
 
 ### Primary
-- **Bordô Laudo** (oxblood): a cor da ação. Botões de agendar, rótulos de período, o pulso de calibração dos títulos, a faixa dos depoimentos. Hover em oxblood-hover, pressionado em oxblood-press.
+- **Bordô Laudo** (oxblood): a cor da ação. Botões de agendar, rótulos de período, o batimento sob os títulos, a faixa dos depoimentos. Hover em oxblood-hover, pressionado em oxblood-press.
 - **Vinho Profundo** (wine): o fechamento e o rodapé, a região mais escura da página.
 
 ### Neutral
@@ -135,7 +135,7 @@ Uma só família de cor, do vinho quase preto ao rosado do papel; o azul e o ros
 
 ### Hierarchy
 - **Display** (400, 32–88 px, 0.92): só o nome da médica na abertura, em caixa-alta, com "Dra." em bordô.
-- **Headline** (400, 34 px no celular, 48 px no desktop, 1.04): um título por seção, em caixa normal, com o pulso de calibração pendurado na margem.
+- **Headline** (400, 34 px no celular, 48 px no desktop, 1.04): um título por seção, em caixa normal, com um batimento de 64 × 16 px logo abaixo, na linha do texto.
 - **Title** (400, 21–28 px, 1.28–1.3): itens de lista (áreas, mitos, capítulos) e a frase do fechamento.
 - **Body** (400, 17 px, 1.6): todo texto corrido; parágrafos até cerca de 40 rem.
 - **Label** (500, 13–15 px, 0.04 em): rótulos de campo (CRM/SC, RQE, períodos), sempre em caixa normal.
@@ -149,14 +149,14 @@ Uma só família de cor, do vinho quase preto ao rosado do papel; o azul e o ros
 
 Celular primeiro. Uma coluna de 342 px em 390 (margem de 24 px); grade de 12 colunas com 24 px de vão a partir de 768 px; container de até 1280 px com margens de 80 px no desktop. Todos os blocos começam na linha esquerda do container ou na linha de divisão única da página (início da coluna 8): retrato da abertura, foto do Sobre, painel dos mitos, lista de perguntas, formulário e texto do fechamento compartilham essa linha.
 
-Cada seção ocupa uma ou duas telas inteiras (100svh no desktop, 100lvh com altura mínima no celular), com o título no topo; separação entre seções só por mudança de fundo ou espaço. O cabeçalho é fixo, a barra "Agendar consulta" do celular é fixa no rodapé e some quando outro botão de agendar está na tela. Nada mais é fixo; a trajetória usa o momento de capítulos (sticky) dentro da própria seção.
+No desktop (1024 px ou mais) cada seção ocupa uma tela inteira (100svh), com o título no topo. Abaixo de 1024 px cada seção tem a altura do próprio conteúdo, com o mesmo respiro entre todas (64 px acima e abaixo no celular, 88 px no tablet em pé); um link do menu deixa o título 40 px abaixo do cabeçalho. Separação entre seções só por mudança de fundo ou espaço. O cabeçalho é fixo, a barra "Agendar consulta" do celular é fixa no rodapé e some quando outro botão de agendar está na tela. Nada mais é fixo e nenhuma seção prende a rolagem.
 
 ### Named Rules
-**The Calibration Margin Rule.** O pulso de calibração de cada título fica na margem, fora da coluna de texto; o texto do título começa exatamente na linha do container.
+**The Heartbeat Rule.** Cada título de seção leva logo abaixo um batimento em traço reto (64 × 16 px), começando na linha do container: é o mesmo batimento do traçado de progresso do cabeçalho, uma seção por batimento. Nada fica pendurado na margem.
 
 ## Elevation & Depth
 
-Plano por padrão: profundidade vem de mudança de fundo (papel, bordô, vinho) e de filetes. Há uma única sombra suave, longa e difusa, usada só em painéis que flutuam sobre a grade ou sobre a foto (resposta do mito no desktop, painel do capítulo, formulário), sempre com um filete bordô de 3 px no topo.
+Plano por padrão: profundidade vem de mudança de fundo (papel, bordô, vinho) e de filetes. Há uma única sombra suave, longa e difusa, usada só em painéis que flutuam sobre a grade ou sobre a foto (resposta do mito no desktop, formulário), sempre com um filete bordô de 3 px no topo.
 
 ### Shadow Vocabulary
 - **Painel sobre o papel** (`box-shadow: 0 24px 48px -32px rgb(31 14 18 / 0.35)`): painéis de leitura sobre a grade.
@@ -166,7 +166,7 @@ Plano por padrão: profundidade vem de mudança de fundo (papel, bordô, vinho) 
 
 ## Shapes
 
-Cantos retos (2 px) em botões, campos, fotos e painéis, como papel cortado. Círculos só nas iniciais dos depoimentos e no disco do ícone do Google. Linhas são sempre de 1 px (filetes) ou o traçado de 2 px; a única exceção é o filete superior de 3 px dos painéis.
+Cantos retos (2 px) em botões, campos, fotos e painéis, como papel cortado. Círculos só nas iniciais dos depoimentos e no disco do ícone do Google. Linhas são sempre de 1 px (filetes) ou o traçado de 2 px; a única exceção é o filete superior de 3 px dos painéis e sob as fotos da trajetória.
 
 ## Components
 
@@ -189,8 +189,11 @@ Cantos retos (2 px) em botões, campos, fotos e painéis, como papel cortado. C�
 ### Laudo Fields (signature)
 Grade de campos com filete superior: rótulo em condensada 13 px (tinta de rótulo) e valor em Fira Sans 500 tabular. Usado para CRM/RQE na abertura e para os itens da trajetória.
 
+### Trajetória (capítulos)
+Três capítulos fixos (Formação, Plantão e emergência, Docência), cada um com uma foto e uma lista de laudo sob um filete bordô de 3 px. Celular: um abaixo do outro, foto 4:3. Tablet em pé: foto 4:5 ao lado da lista. Desktop: três colunas com fotos quadradas; a partir de 1280 px o título vai para a coluna da esquerda e a seção cabe numa tela. Sem efeito de rolagem.
+
 ### ECG Trace (signature)
-Caminho SVG gerado em `src/lib/ecg.ts` na escala do papel (25 mm/s, 10 mm/mV): pulso de calibração 40 × 20 px e complexos P-QRS-T a cada 84 px. Traço branco em `mix-blend-mode: difference`, que fica escuro no papel e claro sobre a foto. Desenha-se uma vez, em 1,5 s.
+Caminho SVG gerado em `src/lib/ecg.ts` na escala do papel (25 mm/s, 10 mm/mV): pulso de calibração 40 × 20 px e complexos P-QRS-T a cada 84 px, todos em segmentos retos (P e T são triângulos, sem curvas). Cantos em ponta (`stroke-linejoin: miter`, limite 2,5): os picos agudos R e S saem chanfrados. Traço branco em `mix-blend-mode: difference`, que fica escuro no papel e claro sobre a foto. Desenha-se uma vez, em 1,5 s.
 
 ## Do's and Don'ts
 
@@ -205,5 +208,6 @@ Caminho SVG gerado em `src/lib/ecg.ts` na escala do papel (25 mm/s, 10 mm/mV): p
 - **Don't** voltar ao vermelho vivo, ao rosa ou ao azul da logo antiga como cores da página.
 - **Don't** usar cartões iguais com ícone, título e texto como estrutura; listas com filetes fazem esse papel.
 - **Don't** colocar rótulos ou sobretítulos acima dos títulos.
-- **Don't** animar blocos ao rolar a página; o movimento fica no traçado da abertura e nos dois momentos (foto que se revela e capítulos da trajetória).
+- **Don't** animar blocos ao rolar a página nem prender a rolagem; o movimento fica no traçado da abertura e no único momento (a foto que se revela no Sobre).
+- **Don't** desenhar curvas no traçado de ECG: ondas em triângulo, cantos vivos.
 - **Don't** inventar números, prêmios ou depoimentos; todo dado vem do site anterior e foi confirmado como correto.
