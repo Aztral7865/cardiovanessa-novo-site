@@ -975,6 +975,16 @@ html.menu-open {
     row-gap: var(--s-3);
   }
 
+  /* foto mais baixa: o traçado fica menor e colado à base, longe do rosto */
+  .hero__trace {
+    margin-bottom: 0;
+  }
+
+  .hero__trace svg {
+    transform-origin: 0 70px;
+    transform: translateY(14px) scaleY(0.5);
+  }
+
   .hero__lead {
     font-size: 16px;
   }
@@ -1020,7 +1030,6 @@ html.menu-open {
   }
 
   .hero__actions {
-    grid-template-columns: auto auto;
     justify-content: start;
     gap: var(--s-3);
   }
@@ -1046,6 +1055,10 @@ html.menu-open {
 
   .hero .fields {
     max-width: 34rem;
+  }
+
+  .hero__actions {
+    grid-template-columns: auto auto;
   }
 }
 
