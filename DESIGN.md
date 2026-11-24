@@ -174,7 +174,7 @@ Cantos retos (2 px) em botões, campos, fotos e painéis, como papel cortado. C�
 - **Shape:** bloco de cantos retos (2 px), 52 px de altura (46 px no cabeçalho).
 - **Primary:** bordô com texto claro, ícone do WhatsApp à esquerda; é sempre "Agendar consulta" e abre o WhatsApp com a mensagem pronta.
 - **Hover / Focus:** o fundo escurece para oxblood-hover; pressionar reduz para 97%; foco com contorno de 2 px em focus, afastado 3 px.
-- **Ghost:** contorno de tinta sobre o papel; no hover vira bloco de tinta. Usado para ações secundárias ("Ver áreas de atuação", "Enviar dúvida pelo WhatsApp").
+- **Ghost:** contorno de tinta sobre o papel; no hover vira bloco de tinta. Usado para ações secundárias ("Ver o que eu trato", "Enviar dúvida pelo WhatsApp").
 
 ### Inputs / Fields
 - **Style:** fundo branco, filete de tinta a 32%, 52 px de altura, rótulo condensado acima.

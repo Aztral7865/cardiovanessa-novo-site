@@ -1,8 +1,19 @@
 ---
 import { sections } from "../data/nav";
+import { inicio, paginas, urlDaPagina } from "../data/paginas";
 import { bookingLink, contact, site } from "../data/site";
 import BrandIcon from "./BrandIcon.astro";
+import SemQuebra from "./SemQuebra.astro";
 import Symbol from "./Symbol.astro";
+
+interface Props {
+  /** nas páginas por tema, os links levam às seções da página inicial */
+  home?: boolean;
+  /** mensagem do botão de WhatsApp (cada página por tema tem a sua) */
+  agendar?: string;
+}
+const { home = true, agendar = bookingLink } = Astro.props;
+const secao = (id: string) => (home ? `#${id}` : inicio(id));
 
 const year = new Date().getFullYear();
 ---
@@ -15,7 +26,7 @@ const year = new Date().getFullYear();
         Consultas com a Dra. Vanessa Damin, cardiologista e clínica médica, em Criciúma (SC). O agendamento é feito pelo
         WhatsApp.
       </p>
-      <a class="btn btn--on-dark" href={bookingLink} target="_blank" rel="noopener" data-cta="close">
+      <a class="btn btn--on-dark" href={agendar} target="_blank" rel="noopener" data-cta="close">
         <BrandIcon name="whatsapp" size={20} />
         Agendar consulta
       </a>
@@ -33,15 +44,32 @@ const year = new Date().getFullYear();
         <nav class="foot__col" aria-label="Navegação no rodapé">
           <p class="foot__title">Navegação</p>
           <ul>
-            {sections.slice(0, 4).map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+            {sections.slice(0, 4).map((s) => <li><a href={secao(s.id)}>{s.label}</a></li>)}
           </ul>
         </nav>
         <div class="foot__col">
           <p class="foot__title">Dúvidas</p>
           <ul>
-            {sections.slice(4).map((s) => <li><a href={`#${s.id}`}>{s.label}</a></li>)}
+            {sections.slice(4).map((s) => <li><a href={secao(s.id)}>{s.label}</a></li>)}
           </ul>
         </div>
+        {
+          paginas.length > 0 && (
+            <nav class="foot__col" aria-label="Saiba mais sobre o coração">
+              <p class="foot__title">Saiba mais</p>
+              <ul>
+                {paginas.map((p) => (
+                  <li>
+                    <a href={urlDaPagina(p.slug)}>
+                      {/* um só bloco de texto, porque o link é flex */}
+                      <span><SemQuebra texto={p.rotulo} /></span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
         <div class="foot__col">
           <p class="foot__title">Contato</p>
           <ul>

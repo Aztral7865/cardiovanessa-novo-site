@@ -1300,7 +1300,7 @@ html.m-enter-done .hero[data-enter] .hero__trace {
     column-gap: var(--gap);
   }
 
-  /* recorte quadrado: lado a lado, as poses (braços cruzados, jaleco bordado, a dupla) se distinguem */
+  /* recorte quadrado: lado a lado, as três poses do ensaio claro se distinguem */
   .chapter__pic {
     aspect-ratio: 1 / 1;
   }
@@ -1426,8 +1426,9 @@ html.m-enter-done .hero[data-enter] .hero__trace {
    Depoimentos (faixa bordô)
    ========================================================================== */
 
+/* com três depoimentos (uma fileira no computador), a faixa tem a altura do conteúdo */
 .depoimentos {
-  --h: 1;
+  --h: 0;
 }
 
 .depoimentos .section-head {
@@ -1542,6 +1543,27 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 .depo__name {
   font-weight: 500;
   font-size: 16px;
+}
+
+/* depois dos três depoimentos: o link para ler todas as avaliações no Google (mesmo desenho do
+   "ver depoimento completo", com a seta de link externo do "deixar avaliação") */
+.depo-list__google {
+  margin-top: var(--s-3);
+  text-decoration: none;
+}
+
+.depo-list__google .icon {
+  transition: transform 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .depo-list__google:hover .link {
+    background-size: 100% 1px;
+  }
+
+  .depo-list__google:hover .icon {
+    transform: translate(2px, -2px);
+  }
 }
 
 .depoimentos__foot {
@@ -2229,6 +2251,8 @@ html.m-enter-done .hero[data-enter] .hero__trace {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  /* respiro para os nomes que quebram em duas linhas ("Colesterol e triglicerídeos") */
+  padding-block: 6px;
   color: var(--on-dark);
   text-decoration: none;
   font-size: 15.5px;
@@ -2279,12 +2303,480 @@ html.m-enter-done .hero[data-enter] .hero__trace {
 }
 
 /* ==========================================================================
-   Celular: ajustes de lista e de altura
+   Links que levam às páginas por tema (dentro de "O que eu trato")
    ========================================================================== */
 
-.depo-list__more {
-  display: none;
+.area__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  margin: calc(-1 * var(--s-2)) 0 var(--s-3);
+  color: var(--oxblood);
+  font-weight: 500;
+  font-size: 15.5px;
+  text-decoration: none;
 }
+
+.area__more .icon {
+  flex: none;
+  transition: transform 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .area__more:hover .icon {
+    transform: translateX(3px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .area__more {
+    min-height: 32px;
+    margin: var(--s-1) 0 0;
+    font-size: 15px;
+  }
+}
+
+/* rodapé: com a coluna "Saiba mais", cinco colunas no computador */
+@media (min-width: 1024px) {
+  .foot__row:has(> :nth-child(5)) {
+    grid-template-columns: minmax(0, 1.3fr) repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   Páginas por tema: um laudo lido com calma. Uma coluna no celular; no
+   computador, o texto à esquerda e o cartão da médica à direita.
+   ========================================================================== */
+
+.pg-article {
+  padding-top: calc(var(--nav) + var(--s-7));
+  padding-bottom: calc(var(--s-8) + var(--bar));
+}
+
+.pg-grid {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.pg-head {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.pg-draft {
+  justify-self: stretch;
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  border: 1px dashed var(--oxblood);
+  background: var(--paper-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.pg-draft strong {
+  font-weight: 500;
+  color: var(--oxblood);
+}
+
+.pg-draft a {
+  color: var(--oxblood);
+  font-weight: 500;
+}
+
+.pg-draft h2 {
+  font-size: 21px;
+  color: var(--oxblood);
+}
+
+.pg-draft ul {
+  display: grid;
+  gap: var(--s-1);
+  padding-left: 1.1em;
+  list-style: disc;
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s-2);
+  font-size: var(--t-small);
+  color: var(--ink-3);
+}
+
+.crumbs li + li::before {
+  content: "›";
+  margin-right: var(--s-2);
+  color: var(--ink-3);
+}
+
+.crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-2);
+}
+
+.crumbs [aria-current] {
+  color: var(--ink);
+}
+
+.pg-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 9vw, 60px);
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+  text-wrap: balance;
+  max-width: 18ch;
+}
+
+.pg-lead {
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 40rem;
+}
+
+.pg-byline {
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.pg-byline a {
+  color: var(--ink);
+}
+
+.pg-head__cta {
+  margin-top: var(--s-2);
+}
+
+.pg-404__actions {
+  display: grid;
+  gap: var(--s-2);
+  justify-self: stretch;
+  margin-top: var(--s-2);
+}
+
+@media (min-width: 640px) {
+  .pg-404__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    justify-self: start;
+  }
+}
+
+/* o corpo do texto: cada pergunta abre com um fio de laudo */
+.pg-body {
+  display: grid;
+  gap: var(--s-7);
+  max-width: 42rem;
+}
+
+.pg-block {
+  display: grid;
+  gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line-strong);
+}
+
+.pg-block h2,
+.pg-laudo h2,
+.pg-related h2,
+.pg-refs h2 {
+  font-size: 27px;
+  line-height: 1.12;
+}
+
+.pg-block p {
+  line-height: 1.65;
+}
+
+.pg-list {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.pg-list li {
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.55;
+}
+
+/* o marcador é um traço curto de linha de base, como no traçado */
+.pg-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 12px;
+  height: 2px;
+  background: var(--oxblood);
+}
+
+/* "quando procurar": o mesmo filete bordô dos capítulos da trajetória */
+.pg-laudo {
+  display: grid;
+  gap: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 3px solid var(--oxblood);
+}
+
+.pg-list--laudo {
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.pg-list--laudo li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pg-list--laudo li::before {
+  top: calc(10px + 0.78em);
+}
+
+.pg-urgent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  padding: var(--s-4);
+  background: var(--paper-2);
+  border-left: 3px solid var(--oxblood);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.pg-urgent .icon {
+  color: var(--oxblood);
+}
+
+.pg-urgent strong {
+  font-weight: 500;
+}
+
+/* cartão da médica e agendamento */
+.pg-aside {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line-strong);
+}
+
+.pg-author {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: center;
+}
+
+.pg-author img {
+  width: 96px;
+  height: 120px;
+  object-fit: cover;
+  object-position: 50% 12%;
+  background: var(--paper-2);
+}
+
+.pg-author figcaption {
+  display: grid;
+  gap: 2px;
+  font-size: var(--t-small);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.pg-author strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.pg-aside__where {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-2);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.pg-aside__where .icon {
+  margin-top: 2px;
+  color: var(--oxblood);
+}
+
+.pg-aside__about {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  justify-self: start;
+  font-weight: 500;
+  font-size: 15.5px;
+  text-decoration: none;
+}
+
+.pg-aside__about .icon {
+  transition: transform 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pg-aside__about:hover .icon {
+    transform: translateX(3px);
+  }
+}
+
+/* leia também, referências e aviso */
+.pg-foot {
+  display: grid;
+  gap: var(--s-7);
+  max-width: 42rem;
+}
+
+.pg-related {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.pg-related ul {
+  border-top: 1px solid var(--line-strong);
+}
+
+.pg-related a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: 60px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.pg-related .icon {
+  flex: none;
+  color: var(--oxblood);
+  transition: transform 220ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pg-related a:hover {
+    color: var(--oxblood);
+  }
+
+  .pg-related a:hover .icon {
+    transform: translateX(3px);
+  }
+}
+
+.pg-refs {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.pg-refs h2 {
+  font-size: 21px;
+}
+
+.pg-refs ol {
+  display: grid;
+  gap: var(--s-2);
+  padding-left: 1.2em;
+  list-style: decimal;
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.pg-refs a {
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+.pg-note {
+  font-size: var(--t-small);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+@media (min-width: 640px) {
+  .pg-article {
+    padding-top: calc(var(--nav) + var(--s-8));
+  }
+
+  .pg-block h2,
+  .pg-laudo h2,
+  .pg-related h2 {
+    font-size: 30px;
+  }
+}
+
+/* computador: texto em 7 colunas, cartão da médica nas 4 da direita, ao lado do texto */
+@media (min-width: 1024px) {
+  .pg-article {
+    padding-top: calc(var(--nav) + var(--s-8));
+    padding-bottom: var(--s-9);
+  }
+
+  .pg-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    row-gap: var(--s-8);
+    align-items: start;
+  }
+
+  .pg-head {
+    grid-column: 1 / span 8;
+  }
+
+  .pg-title {
+    max-width: 24ch;
+  }
+
+  .pg-body,
+  .pg-foot {
+    grid-column: 1 / span 7;
+  }
+
+  .pg-aside {
+    grid-column: 9 / span 4;
+    grid-row: 2 / span 2;
+  }
+
+  .pg-author {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+
+  .pg-author img {
+    width: 120px;
+    height: 150px;
+  }
+
+  .pg-block h2,
+  .pg-laudo h2,
+  .pg-related h2 {
+    font-size: 32px;
+  }
+}
+
+/* ==========================================================================
+   Celular: ajustes de lista e de altura
+   ========================================================================== */
 
 @media (max-width: 639px) {
   .paper-grid {
@@ -2317,18 +2809,6 @@ html.m-enter-done .hero[data-enter] .hero__trace {
     margin-bottom: var(--s-6);
   }
 
-  .depo-list:not(.is-all) > li:nth-child(n + 4) {
-    display: none;
-  }
-
-  .depo-list__more {
-    display: inline-flex;
-    margin-top: var(--s-3);
-  }
-
-  .depo-list.is-all + .depo-list__more {
-    display: none;
-  }
 }
 
 /* ==========================================================================

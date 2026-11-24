@@ -1,39 +1,143 @@
 ---
-import { Font } from "astro:assets";
+import { Font, getImage } from "astro:assets";
+import retrato from "../assets/photos/vanessa-capa.jpg";
+import { areas } from "../data/atuacao";
 import { contact, site } from "../data/site";
+import { experiencia, formacao } from "../data/trajetoria";
 import "../styles/global.css";
+
+interface Props {
+  /** título da aba e do Google (padrão: o da página inicial) */
+  titulo?: string;
+  /** descrição para o Google (padrão: a da página inicial) */
+  descricao?: string;
+  /** endereço da página sem a barra inicial: "" é a página inicial, "pressao-alta" é /pressao-alta */
+  caminho?: string;
+  /** nós de schema.org desta página; na inicial, o padrão é a MedicalWebPage da home */
+  schema?: Record<string, unknown>[];
+  /** não indexar (rascunhos ainda não aprovados pela Dra. Vanessa e a página 404) */
+  noindex?: boolean;
+  /** efeitos da taste-skill ("moments"): só a página inicial usa */
+  momentos?: boolean;
+}
+
+const { titulo, descricao, caminho = "", schema, noindex: naoIndexar = false, momentos = true } = Astro.props;
 
 const PREVIEW = import.meta.env.PUBLIC_PREVIEW === true;
 const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const asset = (path: string) => `${base}${path}`;
-const canonical = new URL(base, Astro.site).href;
+const siteUrl = new URL(base, Astro.site).href;
+const canonical = new URL(`${base}${caminho}`, Astro.site).href;
 const shareImage = new URL(asset("share.jpg"), Astro.site).href;
-const title = `${site.name} | Cardiologista em Criciúma`;
+const title = titulo ?? `${site.name} | Cardiologista em Criciúma`;
+const description = descricao ?? site.description;
+const noindex = PREVIEW || naoIndexar;
+
+// Dados estruturados (schema.org) para o Google entender quem é a médica, onde atende e o que trata.
+// Tudo sai de src/data: nada aqui é informação nova. Não marcar os depoimentos como avaliação:
+// o Google não aceita avaliações publicadas pelo próprio profissional sobre si mesmo.
+const foto = await getImage({ src: retrato, width: 1200, format: "jpg" });
+const fotoUrl = new URL(foto.src, Astro.site).href;
+// os @id são do site inteiro (apontam para a página inicial), para as páginas internas se ligarem a eles
+const id = (frag: string) => `${siteUrl}#${frag}`;
+const endereco = {
+  "@type": "PostalAddress",
+  streetAddress: `${contact.address.street}, ${contact.address.rooms} - ${contact.address.district}`,
+  addressLocality: contact.address.city,
+  addressRegion: contact.address.state,
+  postalCode: contact.address.zip,
+  addressCountry: "BR",
+};
+const [medicina, clinicaMedica, cardiologia] = formacao;
+// onde ela dá plantão hoje: "Serviço de Cardiologia 24h do Hospital São João Batista / Unimed"
+const hospitalAtual = experiencia
+  .find((e) => /atualmente/i.test(e.period))
+  ?.place?.match(/Hospital [^/]+/)?.[0]
+  .trim();
+const laudos = areas.find((a) => /laudo/i.test(a.title));
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Physician",
-  name: site.name,
-  description: site.description,
-  medicalSpecialty: "Cardiovascular",
-  url: canonical,
-  image: shareImage,
-  telephone: contact.phoneDisplay,
-  email: contact.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: `${contact.address.street}, ${contact.address.rooms}`,
-    addressLocality: contact.address.city,
-    addressRegion: contact.address.state,
-    addressCountry: "BR",
-  },
-  hasMap: contact.address.maps,
-  identifier: [
-    { "@type": "PropertyValue", propertyID: "CRM/SC", value: "20674" },
-    { "@type": "PropertyValue", propertyID: "RQE", value: "15969" },
-    { "@type": "PropertyValue", propertyID: "RQE", value: "17474" },
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": id("website"),
+      url: siteUrl,
+      name: site.name,
+      inLanguage: "pt-BR",
+      publisher: { "@id": id("consultorio") },
+    },
+    ...(schema ?? [
+      {
+        "@type": "MedicalWebPage",
+        "@id": id("pagina"),
+        url: siteUrl,
+        name: title,
+        description,
+        inLanguage: "pt-BR",
+        isPartOf: { "@id": id("website") },
+        about: { "@id": id("consultorio") },
+        author: { "@id": id("medica") },
+        primaryImageOfPage: fotoUrl,
+      },
+    ]),
+    {
+      // o consultório: é ele que aparece em buscas como "cardiologista em Criciúma"
+      "@type": "Physician",
+      "@id": id("consultorio"),
+      name: site.name,
+      description: site.description,
+      url: siteUrl,
+      image: [fotoUrl, shareImage],
+      telephone: contact.phoneDisplay,
+      email: contact.email,
+      medicalSpecialty: "https://schema.org/Cardiovascular",
+      address: endereco,
+      // o consultório fica dentro da clínica Aura Neurologia
+      containedInPlace: { "@type": "MedicalClinic", name: contact.address.place, address: endereco },
+      // a ficha dela no Google Maps (Perfil da Empresa) e o ponto marcado nela
+      hasMap: contact.profileLink,
+      geo: { "@type": "GeoCoordinates", latitude: -28.6753485, longitude: -49.3635282 },
+      areaServed: { "@type": "City", name: contact.address.city },
+      isAcceptingNewPatients: true,
+      knowsAbout: areas.filter((a) => a !== laudos).map((a) => a.title),
+      ...(laudos && {
+        availableService: ["Eletrocardiograma (ECG)", "Holter 24h", "MAPA"].map((name) => ({
+          "@type": "MedicalTest",
+          name: `Laudo de ${name}`,
+        })),
+      }),
+      ...(hospitalAtual && { hospitalAffiliation: { "@type": "Hospital", name: hospitalAtual } }),
+      employee: { "@id": id("medica") },
+      identifier: site.registryParts.map((r) => ({ "@type": "PropertyValue", propertyID: r.label, value: r.value })),
+      sameAs: [contact.profileLink, contact.instagram],
+    },
+    {
+      // a médica como pessoa: formação e registros, que dão confiança ao Google em temas de saúde
+      "@type": "Person",
+      "@id": id("medica"),
+      name: "Vanessa Damin",
+      honorificPrefix: "Dra.",
+      jobTitle: site.specialty,
+      image: fotoUrl,
+      url: siteUrl,
+      worksFor: { "@id": id("consultorio") },
+      alumniOf: [
+        { "@type": "CollegeOrUniversity", name: medicina.place },
+        { "@type": "Hospital", name: clinicaMedica.place },
+        { "@type": "MedicalOrganization", name: cardiologia.place },
+      ],
+      hasCredential: site.registryParts.map((r) => ({
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: r.label === "RQE" ? "Registro de Qualificação de Especialista" : "Registro profissional",
+        name: `${r.label} ${r.value}`,
+        ...(r.label.startsWith("CRM") && {
+          recognizedBy: { "@type": "Organization", name: "Conselho Regional de Medicina de Santa Catarina" },
+        }),
+      })),
+      sameAs: [contact.instagram],
+    },
   ],
-  sameAs: [contact.instagram],
 };
 ---
 
@@ -43,8 +147,8 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
-    <meta name="description" content={site.description} />
-    {PREVIEW ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
     <meta name="site-kind" content="other" />
     <meta name="page-type" content="service" />
     <meta name="theme-color" content="#FDFCFC" />
@@ -55,7 +159,7 @@ const jsonLd = {
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={site.description} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={shareImage} />
     <meta property="og:image:width" content="1200" />
@@ -75,18 +179,24 @@ const jsonLd = {
       document.documentElement.classList.add("m-enter");
       setTimeout(() => document.documentElement.classList.add("m-enter-done"), 2200);
     </script>
-    <script is:inline>
-      document.documentElement.classList.add("mo-js");
-      setTimeout(() => document.documentElement.classList.add("mo-safe"), 2500);
-    </script>
-    <link rel="modulepreload" href={asset("assets/moments/moments.js")} />
-    <link rel="modulepreload" href={asset("assets/moments/lib.js")} />
-    <link rel="modulepreload" href={asset("assets/moments/picture-develops/moment.js")} />
+    {
+      momentos && (
+        <>
+          <script is:inline>
+            document.documentElement.classList.add("mo-js");
+            setTimeout(() => document.documentElement.classList.add("mo-safe"), 2500);
+          </script>
+          <link rel="modulepreload" href={asset("assets/moments/moments.js")} />
+          <link rel="modulepreload" href={asset("assets/moments/lib.js")} />
+          <link rel="modulepreload" href={asset("assets/moments/picture-develops/moment.js")} />
+        </>
+      )
+    }
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />
-    <script type="module" src={asset("assets/moments/moments.js")}></script>
+    {momentos && <script type="module" src={asset("assets/moments/moments.js")}></script>}
   </body>
 </html>

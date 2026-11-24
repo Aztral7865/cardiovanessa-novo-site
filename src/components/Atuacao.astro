@@ -1,12 +1,13 @@
 ---
 import { areas } from "../data/atuacao";
+import { paginasDaArea, urlDaPagina } from "../data/paginas";
 import Icon from "./Icon.astro";
 ---
 
 <section class="atuacao paper-grid" id="atuacao" aria-labelledby="atuacao-h">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="atuacao-h">Áreas de atuação em cardiologia</h2>
+      <h2 id="atuacao-h">O que eu trato</h2>
       <p>Da prevenção cardiovascular ao laudo de exames: as condições do coração que a Dra. Vanessa acompanha.</p>
     </div>
     <ul class="areas" data-areas>
@@ -19,6 +20,16 @@ import Icon from "./Icon.astro";
                 <Icon name="plus" size={22} />
               </summary>
               <p>{a.description}</p>
+              {paginasDaArea(a.title)
+                .slice(0, 1)
+                .map((p) => (
+                  <a class="area__more" href={urlDaPagina(p.slug)}>
+                    <span class="link">
+                      Saiba mais<span class="sr-only"> sobre {p.rotulo}</span>
+                    </span>
+                    <Icon name="arrow-right" size={16} />
+                  </a>
+                ))}
             </details>
           </li>
         ))

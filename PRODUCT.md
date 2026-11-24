@@ -49,8 +49,8 @@ Uma cardiologista que reúne, ao mesmo tempo:
 
 - **Todas as informações do site atual estão corretas e não podem ser alteradas**: nomes, CRM/RQE, formação, experiências, áreas de atuação, mitos e verdades, perguntas frequentes, depoimentos, endereço e contatos. O redesenho muda apresentação e estrutura, não fatos.
 - Registro exibido no site: `CRM/SC 20674 – RQE 15969 / RQE 17474`. Especialidade: "Cardiologista e Clínica Médica".
-- Conteúdo: 16 áreas de atuação, 6 mitos/verdades, 6 perguntas frequentes, 6 depoimentos, 4 itens de formação, 4 de experiência.
-- Single page: sem abas, sem páginas separadas e **sem splash screen**.
+- Conteúdo: 16 itens em "O que eu trato" (antes "Áreas de atuação", trocado em nov/2026 porque no CFM o termo se refere a título com RQE), 6 mitos/verdades, 6 perguntas frequentes, 3 depoimentos no site (os outros 3 guardados em `outrosDepoimentos`, com link para todas as avaliações no Google), 4 itens de formação, 4 de experiência.
+- A página inicial continua sendo a mesma página única, sem abas e **sem splash screen**; os pacientes navegam por ela como sempre. Desde nov/2026 existem páginas por tema (`src/data/paginas/`, montadas por `src/pages/[slug].astro`), abertas só por links "Saiba mais" em "O que eu trato" e pelo rodapé. Cada texto novo é rascunho até a Dra. Vanessa aprovar (campo `revisadoEm`): rascunhos aparecem no `npm run dev` e na prévia, nunca no site no ar.
 - Prioridade máxima para a experiência no celular; responsivo sem quebras em todas as larguras.
 - Sem backend, sem banco de dados, sem agendamento online integrado.
 - Ainda não definidos (não inventar): horário de atendimento, valores, lista de convênios, canal do YouTube (o ícone está previsto na stack, mas não existe link), atendimento online.
@@ -64,7 +64,7 @@ Uma cardiologista que reúne, ao mesmo tempo:
 
 ## Evidence on Hand
 
-- Fotos profissionais de estúdio (originais muito grandes, 4480×6720): `images/img1.jpg` (sentada, luz de estúdio), `images/img2.jpg` (fundo escuro, estetoscópio), `images/img3.jpg` (braços cruzados, fundo cinza), `images/img4.jpg` (com Dr. Fernando, roupa social), `images/img5.jpg` (com Dr. Fernando, jalecos, horizontal), `images/img7.jpg` (com Dr. Fernando, corpo inteiro). `images/img6.jpg` é cópia idêntica de `img5.jpg`.
+- Fotos profissionais de estúdio do ensaio de nov/2026 (originais 2000×3000 em `_legado/fotos-2026/`, fora do git). Fundo roxo-escuro, blusa branca e colete cinza: `IMG_7308` (capa, mão no queixo — escolha da Dra. Vanessa), `IMG_7309` (sorrindo, mãos nos bolsos — Sobre), `IMG_7310` (corpo inteiro), `IMG_7311` (sorrindo, mão no queixo); fundo bege e conjunto claro: `IMG_7314` (sorrindo — Formação), `IMG_7315` (séria — Plantão e emergência), `IMG_7317` (apoiada na cadeira — Docência); em preto e branco: `IMG_7306`, `IMG_7312`, `IMG_7320`. Exigência da cliente: a capa é a `IMG_7308` e a foto seguinte é uma sorrindo. As fotos antigas (de jaleco e com o Dr. Fernando) saíram do site.
 - Seis depoimentos reais com nome (Fabricia Gava, Suelen Batista, Artur Seixas, Carmem Vuolo, Adriana Cadorin, Frank Melian), todos 5 estrelas. As fotos de perfil originais são miniaturas 65×65 de baixa qualidade.
 - Não existem: números de pacientes atendidos, prêmios, imprensa, nota média do Google com contagem de avaliações. Não fabricar.
 

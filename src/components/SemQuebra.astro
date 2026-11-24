@@ -1,0 +1,10 @@
+---
+// Escreve o texto sem deixar palavras com hífen se partirem no fim da linha
+// ("pré-esportiva", "check-up"): no celular, "pré-" numa linha e "esportiva" na outra lê mal.
+interface Props {
+  texto: string;
+}
+const partes = Astro.props.texto.split(/(\S*-\S*)/);
+---
+
+{partes.map((p) => (p.includes("-") && p.trim() ? <span class="nowrap">{p}</span> : p))}

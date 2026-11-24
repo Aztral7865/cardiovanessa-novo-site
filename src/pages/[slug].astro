@@ -1,0 +1,256 @@
+---
+// Páginas por tema (pressão alta, colesterol, exames...). O conteúdo vem de src/data/paginas/<slug>.ts.
+// A página inicial continua igual; estas páginas só são abertas pelos links "Saiba mais".
+import { Image } from "astro:assets";
+import retrato from "../assets/photos/vanessa-retrato.jpg";
+import BrandIcon from "../components/BrandIcon.astro";
+import Closing from "../components/Closing.astro";
+import Header from "../components/Header.astro";
+import Icon from "../components/Icon.astro";
+import SemQuebra from "../components/SemQuebra.astro";
+import Base from "../layouts/Base.astro";
+import { ehRascunho, inicio, paginaPorSlug, paginas, urlDaPagina } from "../data/paginas";
+import { contact, site, whatsappLink } from "../data/site";
+
+export function getStaticPaths() {
+  return paginas.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const pagina = paginaPorSlug(Astro.params.slug)!;
+const rascunho = ehRascunho(pagina);
+const agendar = whatsappLink(pagina.mensagemWhatsApp);
+const relacionadas = pagina.relacionadas.map(paginaPorSlug).filter((p) => p !== undefined);
+
+const dataBR = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("pt-BR");
+
+// schema.org desta página; a médica, o consultório e o site vêm do Base (mesmos @id)
+const siteUrl = new URL(inicio(), Astro.site).href;
+const url = new URL(urlDaPagina(pagina.slug), Astro.site).href;
+const id = (frag: string) => `${siteUrl}#${frag}`;
+const schema = [
+  {
+    "@type": "MedicalWebPage",
+    "@id": `${url}#pagina`,
+    url,
+    name: pagina.tituloSeo,
+    headline: pagina.titulo,
+    description: pagina.descricao,
+    inLanguage: "pt-BR",
+    isPartOf: { "@id": id("website") },
+    author: { "@id": id("medica") },
+    publisher: { "@id": id("consultorio") },
+    audience: { "@type": "PeopleAudience", audienceType: "Pacientes" },
+    ...(pagina.revisadoEm && { reviewedBy: { "@id": id("medica") }, lastReviewed: pagina.revisadoEm }),
+    citation: pagina.fontes.map((f) => ({ "@type": "CreativeWork", name: f.nome, ...(f.url && { url: f.url }) })),
+    breadcrumb: { "@id": `${url}#caminho` },
+  },
+  {
+    "@type": "BreadcrumbList",
+    "@id": `${url}#caminho`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: pagina.rotulo, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  titulo={pagina.tituloSeo}
+  descricao={pagina.descricao}
+  caminho={pagina.slug}
+  schema={schema}
+  noindex={rascunho}
+  momentos={false}
+>
+  <Header home={false} />
+  <main id="conteudo" tabindex="-1" class="pg">
+    <article class="pg-article paper-grid" aria-labelledby="pg-h">
+      <div class="wrap pg-grid">
+        <header class="pg-head">
+          {
+            rascunho && (
+              <aside class="pg-draft" aria-label="Aviso de rascunho">
+                <p>
+                  <strong>Rascunho para a Dra. Vanessa revisar.</strong> Esta página aparece só na prévia; ela entra no
+                  site no ar depois que o texto for aprovado.
+                  {pagina.pendencias && pagina.pendencias.length > 0 && (
+                    <a href="#pontos-para-confirmar">Ver os pontos para confirmar</a>
+                  )}
+                </p>
+              </aside>
+            )
+          }
+
+          <nav class="crumbs" aria-label="Você está em">
+            <ol>
+              <li><a href={inicio()}>Início</a></li>
+              <li><a href={inicio("atuacao")}>O que eu trato</a></li>
+              <li aria-current="page"><SemQuebra texto={pagina.rotulo} /></li>
+            </ol>
+          </nav>
+
+          <h1 class="pg-title" id="pg-h"><SemQuebra texto={pagina.titulo} /></h1>
+          <p class="pg-lead">{pagina.resumo}</p>
+          <p class="pg-byline">
+            Por <a href={inicio("sobre")}>{site.name}</a>, cardiologista e clínica médica
+            <span class="nowrap">· CRM/SC {site.registryParts[0].value}</span>
+            {
+              pagina.revisadoEm && (
+                <span class="nowrap">
+                  · revisado em <time datetime={pagina.revisadoEm}>{dataBR(pagina.revisadoEm)}</time>
+                </span>
+              )
+            }
+          </p>
+          <a class="btn pg-head__cta" href={agendar} target="_blank" rel="noopener" data-cta="hero">
+            <BrandIcon name="whatsapp" size={20} />
+            Agendar consulta
+          </a>
+        </header>
+
+        <div class="pg-body">
+          {
+            pagina.blocos.map((b) => (
+              <section class="pg-block">
+                <h2><SemQuebra texto={b.titulo} /></h2>
+                {b.paragrafos?.map((t) => (
+                  <p>{t}</p>
+                ))}
+                {b.itens && (
+                  <ul class="pg-list">
+                    {b.itens.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))
+          }
+
+          {
+            pagina.quandoProcurar && (
+              <section class="pg-laudo">
+                <h2><SemQuebra texto={pagina.quandoProcurar.titulo} /></h2>
+                <ul class="pg-list pg-list--laudo">
+                  {pagina.quandoProcurar.itens.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            pagina.urgencia && (
+              <p class="pg-urgent" role="note">
+                <Icon name="siren" size={22} />
+                <span>
+                  <strong>Emergência:</strong> {pagina.urgencia}
+                </span>
+              </p>
+            )
+          }
+        </div>
+
+        <aside class="pg-aside" aria-label="Sobre a médica e o agendamento">
+          <figure class="pg-author">
+            <Image
+              src={retrato}
+              format="webp"
+              widths={[160, 240, 320]}
+              sizes="(min-width: 1024px) 120px, 96px"
+              alt="Dra. Vanessa Damin sorrindo, com a mão apoiada no queixo"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>{site.name}</strong>
+              <span>{site.specialty}</span>
+              <span class="num">{site.registry}</span>
+            </figcaption>
+          </figure>
+          <p class="pg-aside__where">
+            <Icon name="map-pin" size={18} />
+            <span>
+              Atendimento particular em {contact.address.city}: {contact.address.place}, {contact.address.street},
+              {contact.address.rooms} - {contact.address.district}.
+            </span>
+          </p>
+          <a class="btn btn--block" href={agendar} target="_blank" rel="noopener">
+            <BrandIcon name="whatsapp" size={20} />
+            Agendar consulta
+          </a>
+          <a class="pg-aside__about" href={inicio("sobre")}>
+            <span class="link">Conheça a Dra. Vanessa</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </aside>
+
+        <footer class="pg-foot">
+          {
+            rascunho && pagina.pendencias && pagina.pendencias.length > 0 && (
+              <section class="pg-draft" id="pontos-para-confirmar" aria-labelledby="pg-pend-h">
+                <h2 id="pg-pend-h">Pontos para a Dra. Vanessa confirmar</h2>
+                <ul>
+                  {pagina.pendencias.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+          {
+            relacionadas.length > 0 && (
+              <nav class="pg-related" aria-labelledby="pg-rel-h">
+                <h2 id="pg-rel-h">Leia também</h2>
+                <ul>
+                  {relacionadas.map((r) => (
+                    <li>
+                      <a href={urlDaPagina(r.slug)}>
+                        <span><SemQuebra texto={r.rotulo} /></span>
+                        <Icon name="arrow-right" size={20} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )
+          }
+          {
+            pagina.fontes.length > 0 && (
+              <section class="pg-refs" aria-labelledby="pg-refs-h">
+                <h2 id="pg-refs-h">Referências</h2>
+                <ol>
+                  {pagina.fontes.map((f) => (
+                    <li>
+                      {f.url ? (
+                        <a href={f.url} target="_blank" rel="noopener">
+                          {f.nome}
+                        </a>
+                      ) : (
+                        f.nome
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )
+          }
+          <p class="pg-note">
+            Conteúdo informativo, que não substitui a consulta. Cada caso é avaliado individualmente.
+          </p>
+        </footer>
+      </div>
+    </article>
+  </main>
+  <Closing home={false} agendar={agendar} />
+  <nav class="actionbar" aria-label="Agendamento" data-actionbar>
+    <a class="btn btn--block" href={agendar} target="_blank" rel="noopener" data-cta="bar">
+      <BrandIcon name="whatsapp" size={20} />
+      Agendar consulta
+    </a>
+  </nav>
+  <script>
+    import "../scripts/site.ts";
+  </script>
+</Base>

@@ -73,9 +73,10 @@ const split = (text: string) => {
         })
       }
     </ul>
-    <button class="depo__more depo-list__more" type="button" data-depo-all>
-      Ver mais {depoimentos.length - 3} depoimentos
-      <Icon name="chevron-down" size={18} />
-    </button>
+    <!-- três depoimentos no site; os demais o paciente lê direto no Google -->
+    <a class="depo__more depo-list__google" href={contact.profileLink} target="_blank" rel="noopener">
+      <span class="link">Ver todas as avaliações no Google</span>
+      <Icon name="arrow-up-right" size={18} />
+    </a>
   </div>
 </section>

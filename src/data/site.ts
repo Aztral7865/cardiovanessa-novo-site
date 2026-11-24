@@ -45,6 +45,8 @@ export const contact = {
   instagramHandle: "@vanessadamincardiologista",
   instagram: "https://www.instagram.com/vanessadamincardiologista/",
   reviewLink: "https://g.page/r/CYMbpqRkVXzCEAI/review",
+  // o mesmo link sem "/review" abre o Perfil da Empresa no Google (Maps), com todas as avaliações
+  profileLink: "https://g.page/r/CYMbpqRkVXzCEAI",
   address: {
     // o consultório fica dentro da clínica Aura Neurologia
     place: "Aura Neurologia",

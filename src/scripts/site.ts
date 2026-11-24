@@ -161,7 +161,7 @@ function initActionBar() {
   sync();
 }
 
-/* ---------- áreas de atuação: lista aberta no computador, sanfona no celular ---- */
+/* ---------- o que eu trato: lista aberta no computador, sanfona no celular -------- */
 function initAreas() {
   const items = $$<HTMLDetailsElement>(".area");
   if (!items.length) return;
@@ -252,12 +252,6 @@ function initFaq() {
 
 /* ---------- depoimentos longos ----------------------------------------------- */
 function initDepoimentos() {
-  const all = $<HTMLButtonElement>("[data-depo-all]");
-  all?.addEventListener("click", () => {
-    const list = $(".depo-list");
-    list?.classList.add("is-all");
-    $<HTMLElement>(".depo-list > li:nth-child(4) .depo__more, .depo-list > li:nth-child(4) figcaption")?.focus?.();
-  });
   $$<HTMLButtonElement>("[data-depo-more]").forEach((btn) => {
     const rest = document.getElementById(btn.getAttribute("aria-controls")!);
     const dots = rest?.previousElementSibling as HTMLElement | null;

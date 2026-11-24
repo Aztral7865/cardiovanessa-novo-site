@@ -1,21 +1,29 @@
 ---
 import { sections } from "../data/nav";
+import { inicio } from "../data/paginas";
 import { bookingLink, contact } from "../data/site";
 import BrandIcon from "./BrandIcon.astro";
 import Icon from "./Icon.astro";
 import Symbol from "./Symbol.astro";
+
+interface Props {
+  /** nas páginas por tema, os links do menu levam às seções da página inicial */
+  home?: boolean;
+}
+const { home = true } = Astro.props;
+const secao = (id: string) => (home ? `#${id}` : inicio(id));
 ---
 
 <header class="nav" data-nav>
   <div class="wrap nav__bar">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <a class="brand" href="#topo" aria-label="Dra. Vanessa Damin, início da página">
+    <a class="brand" href={home ? "#topo" : inicio()} aria-label="Dra. Vanessa Damin, início da página">
       <Symbol id="nav" />
       <span class="brand__name">Dra. Vanessa Damin</span>
     </a>
 
     <nav class="nav__links" aria-label="Seções">
-      {sections.map((s) => <a href={`#${s.id}`} data-nav-link={s.id}>{s.short}</a>)}
+      {sections.map((s) => <a href={secao(s.id)} data-nav-link={s.id}>{s.short}</a>)}
     </nav>
 
     <a class="btn nav__cta" href={bookingLink} target="_blank" rel="noopener" data-cta="nav">
@@ -56,7 +64,7 @@ import Symbol from "./Symbol.astro";
       {
         sections.map((s, i) => (
           <li>
-            <a href={`#${s.id}`} style={`--i: ${i}`} data-menu-link>
+            <a href={secao(s.id)} style={`--i: ${i}`} data-menu-link>
               <span class="num">{String(i + 1).padStart(2, "0")}</span>
               {s.label}
             </a>

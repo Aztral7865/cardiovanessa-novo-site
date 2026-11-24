@@ -1,0 +1,38 @@
+---
+// Página para endereços que não existem (o GitHub Pages a usa no lugar da página genérica dele).
+import BrandIcon from "../components/BrandIcon.astro";
+import Closing from "../components/Closing.astro";
+import Header from "../components/Header.astro";
+import Icon from "../components/Icon.astro";
+import Base from "../layouts/Base.astro";
+import { inicio } from "../data/paginas";
+import { bookingLink } from "../data/site";
+---
+
+<Base titulo="Página não encontrada | Dra. Vanessa Damin" caminho="404" noindex momentos={false}>
+  <Header home={false} />
+  <main id="conteudo" tabindex="-1" class="pg">
+    <article class="pg-article paper-grid" aria-labelledby="pg-h">
+      <div class="wrap pg-grid">
+        <header class="pg-head">
+          <h1 class="pg-title" id="pg-h">Esta página não foi encontrada</h1>
+          <p class="pg-lead">O endereço pode ter mudado ou estar incompleto. Você pode voltar ao início ou agendar sua consulta pelo WhatsApp.</p>
+          <div class="pg-404__actions">
+            <a class="btn" href={bookingLink} target="_blank" rel="noopener" data-cta="hero">
+              <BrandIcon name="whatsapp" size={20} />
+              Agendar consulta
+            </a>
+            <a class="btn btn--ghost" href={inicio()}>
+              Ir para o início
+              <Icon name="arrow-right" size={18} class="btn__arrow" />
+            </a>
+          </div>
+        </header>
+      </div>
+    </article>
+  </main>
+  <Closing home={false} />
+  <script>
+    import "../scripts/site.ts";
+  </script>
+</Base>

@@ -1,4 +1,8 @@
 // Depoimentos reais (texto exatamente como publicado pelos pacientes no Google).
+//
+// No site aparecem só três, escolhidos em 24/11/2026 pelos mais sóbrios: a Resolução CFM 2.336/2023
+// pede depoimentos sem adjetivos de superioridade. Os demais ficam guardados em `outrosDepoimentos`
+// (para trocar, basta mover um item de uma lista para a outra) e todos podem ser lidos no Google.
 
 export interface Depoimento {
   author: string;
@@ -16,12 +20,17 @@ export const depoimentos: Depoimento[] = [
     text: "A Dra. Vanessa foi extremamente atenciosa ao atender meu marido, que mora em outro país e não fala português. Mesmo com a agenda cheia, ela conseguiu fazer um encaixe e foi muito cuidadosa e profissional durante toda a consulta. Mostrou empatia, paciência e explicou tudo de forma clara para que ele entendesse. Foi um cuidado que tocou nosso coração. Ela é uma médica competente, gentil e com um jeitinho especial que faz toda a diferença. Somos muito gratos pelo atendimento. Obrigada Dra. Vanessa❤️❤️❤️",
   },
   {
-    author: "Artur Seixas",
-    text: "Gostaria de expressar minha profunda gratidão pelo atendimento excepcional que a Dra. Vanessa prestou à minha avó. Sua atenção, empatia e profissionalismo fizeram toda a diferença em um momento delicado para nossa família!",
-  },
-  {
     author: "Carmem Vuolo",
     text: "Ela é maravilhosa, como profissional é excelente, muito dedicada e atenciosa , ela cuida do meu paizinho de 84 anos ! Ele adora ela e nós tbm por cuidar tão bem dele!",
+  },
+];
+
+/** Fora do site: "excepcional", "espetacular" e "the best treatment in Brazil" soam como superioridade,
+ * e um deles cita o endereço antigo (Clínica Salváro). */
+export const outrosDepoimentos: Depoimento[] = [
+  {
+    author: "Artur Seixas",
+    text: "Gostaria de expressar minha profunda gratidão pelo atendimento excepcional que a Dra. Vanessa prestou à minha avó. Sua atenção, empatia e profissionalismo fizeram toda a diferença em um momento delicado para nossa família!",
   },
   {
     author: "Adriana Cadorin",

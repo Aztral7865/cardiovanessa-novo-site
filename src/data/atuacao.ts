@@ -1,4 +1,5 @@
-// Áreas de atuação (títulos e descrições do site anterior, na mesma ordem).
+// O que eu trato (antes "Áreas de atuação", termo que no CFM se refere a título registrado com RQE).
+// Títulos e descrições do site anterior, na mesma ordem.
 
 export interface Area {
   title: string;
