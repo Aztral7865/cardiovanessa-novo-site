@@ -1,8 +1,8 @@
 ---
 import { Picture } from "astro:assets";
-import retrato from "../assets/photos/vanessa-estetoscopio.jpg";
+import retrato from "../assets/photos/vanessa-capa.jpg";
 // o mesmo retrato com o fundo transparente (tools/recorte.py): fica na frente do traçado
-import recorte from "../assets/photos/vanessa-estetoscopio-recorte.webp";
+import recorte from "../assets/photos/vanessa-capa-recorte.webp";
 import { bookingLink, site } from "../data/site";
 import { tracePath } from "../lib/ecg";
 import BrandIcon from "./BrandIcon.astro";
@@ -25,8 +25,8 @@ const trace = tracePath({ width: 2400, baseline: 70, calibration: true, lead: 40
         src={retrato}
         formats={["avif", "webp"]}
         widths={[420, 640, 860, 1100, 1400]}
-        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, 100vw"
-        alt="Dra. Vanessa Damin de jaleco branco, segurando o estetoscópio, sorrindo"
+        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, calc(100vw - 48px)"
+        alt="Dra. Vanessa Damin, cardiologista em Criciúma, de blusa branca e colete cinza, com a mão apoiada no queixo"
         priority
       />
     </figure>
@@ -40,8 +40,9 @@ const trace = tracePath({ width: 2400, baseline: 70, calibration: true, lead: 40
       <Picture
         src={recorte}
         formats={["avif", "webp"]}
+        fallbackFormat="webp"
         widths={[420, 640, 860, 1100, 1400]}
-        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, 100vw"
+        sizes="(min-width: 1440px) 520px, (min-width: 768px) 40vw, calc(100vw - 48px)"
         alt=""
         loading="eager"
         fetchpriority="high"
@@ -70,7 +71,7 @@ const trace = tracePath({ width: 2400, baseline: 70, calibration: true, lead: 40
         Agendar consulta
       </a>
       <a class="btn btn--ghost" href="#atuacao">
-        Ver áreas de atuação
+        Ver o que eu trato
         <Icon name="arrow-down" size={18} class="btn__arrow" />
       </a>
     </div>

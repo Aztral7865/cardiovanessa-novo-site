@@ -1,22 +1,23 @@
-// Reduz as fotos originais de estúdio (4480×6720, ~10 MB) para fontes de trabalho
-// leves em src/assets/photos. O Astro (sharp) gera AVIF/WebP responsivos a partir delas.
-// O retrato de jaleco (vanessa-jaleco.jpg) é recortado da foto em dupla img5.
+// Reduz as fotos originais de estúdio (2000×3000, ~4 MB, ensaio de nov/2026) para fontes de
+// trabalho leves em src/assets/photos. O Astro (sharp) gera AVIF/WebP responsivos a partir delas.
+// Depois de trocar a foto da capa, rode `python tools/recorte.py` para refazer o recorte.
 //
 // Uso: node tools/prepare-photos.mjs <pasta-das-originais>
 import sharp from "sharp";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 
-const srcDir = process.argv[2] ?? "_legado/images";
+const srcDir = process.argv[2] ?? "_legado/fotos-2026";
 const outDir = "src/assets/photos";
 
-/** box: recorte em frações da imagem original [x0, y0, x1, y1] */
+/** box (opcional): recorte em frações da imagem original [x0, y0, x1, y1] */
 const photos = [
-  { from: "img2.jpg", to: "vanessa-estetoscopio.jpg" },
-  { from: "img3.jpg", to: "vanessa-bracos-cruzados.jpg" },
-  { from: "img1.jpg", to: "vanessa-estudio.jpg" },
-  { from: "img5.jpg", to: "vanessa-jaleco.jpg", box: [0.47, 0.05, 0.83, 1] },
-  { from: "img7.jpg", to: "vanessa-e-fernando.jpg" },
+  { from: "IMG_7308.JPG.jpeg", to: "vanessa-capa.jpg" }, // abertura (escolha da Dra. Vanessa)
+  { from: "IMG_7309.JPG.jpeg", to: "vanessa-sorrindo.jpg" }, // Sobre
+  { from: "IMG_7314.JPG.jpeg", to: "vanessa-formacao.jpg" }, // Trajetória: Formação
+  { from: "IMG_7315.JPG.jpeg", to: "vanessa-plantao.jpg" }, // Trajetória: Plantão e emergência
+  { from: "IMG_7317.JPG.jpeg", to: "vanessa-docencia.jpg" }, // Trajetória: Docência
+  { from: "IMG_7311.JPG.jpeg", to: "vanessa-retrato.jpg" }, // páginas por tema: cartão da autora
 ];
 
 await mkdir(outDir, { recursive: true });

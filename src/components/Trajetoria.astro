@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import formacaoFoto from "../assets/photos/vanessa-bracos-cruzados.jpg";
-import plantaoFoto from "../assets/photos/vanessa-jaleco.jpg";
-import docenciaFoto from "../assets/photos/vanessa-e-fernando.jpg";
+import formacaoFoto from "../assets/photos/vanessa-formacao.jpg";
+import plantaoFoto from "../assets/photos/vanessa-plantao.jpg";
+import docenciaFoto from "../assets/photos/vanessa-docencia.jpg";
 import { experiencia, formacao } from "../data/trajetoria";
 
 const [medicina, clinica, cardio, cursos] = formacao;
@@ -14,22 +14,22 @@ const capitulos = [
     title: "Formação",
     items: [medicina, clinica, cardio, cursos],
     img: formacaoFoto,
-    alt: "Dra. Vanessa Damin de jaleco, braços cruzados, sorrindo",
-    pos: "50% 6%",
+    alt: "Dra. Vanessa Damin de conjunto claro, sorrindo, com a mão apoiada no queixo",
+    pos: "50% 8%",
   },
   {
     title: "Plantão e emergência",
     items: [plantao, samu, uti],
     img: plantaoFoto,
-    alt: "Dra. Vanessa Damin de jaleco, com as mãos nos bolsos",
-    pos: "50% 10%",
+    alt: "Dra. Vanessa Damin de conjunto claro, com um braço cruzado e a mão junto à gola",
+    pos: "50% 6%",
   },
   {
     title: "Docência",
     items: [ufsc],
     img: docenciaFoto,
-    alt: "Dra. Vanessa Damin e Dr. Fernando, de jaleco",
-    pos: "50% 4%",
+    alt: "Dra. Vanessa Damin apoiada no encosto de uma cadeira, sorrindo",
+    pos: "50% 2%",
   },
 ];
 ---
